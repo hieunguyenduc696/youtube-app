@@ -1,5 +1,7 @@
+import Sidebar from "../../shared/components/Sidebar/Sidebar";
+
 const Videos = () => {
-  return <div>Videos Works!</div>;
+  return <div></div>
 };
 
 export default Videos;

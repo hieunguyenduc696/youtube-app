@@ -1,0 +1,53 @@
+.sidebar {
+  width: 240px;
+  background-color: white;
+  height: 100vh;
+  position: fixed;
+  overflow: auto;
+  top: 60px;
+  left: 0;
+}
+
+.sidebar-top {
+}
+
+.sidebar-list {
+  width: 100%;
+  margin-top: 18px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+.sidebar-item ion-icon {
+    font-size: 20px;
+    display: inline-flex;
+}
+
+.sidebar-item i::before {
+  font-size: 20px;
+  margin-right: 10px;
+  color: black;
+  flex-shrink: 0;
+}
+
+.sidebar-item span {
+  font-size: 14px;
+  color: black;
+  flex: 1;
+  margin-left: 2px;
+}
+
+.sidebar-item a {
+  padding: 1rem 3rem;
+  display: block;
+  width: 100%;
+}
+
+.active {
+  background-color: #eee;
+  font-weight: 600;
+}
