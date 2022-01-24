@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import SearchIcon from "../../icons/SearchIcon";
 import VideoIcon from "../../icons/VideoIcon";
 import Sidebar from "../Sidebar/Sidebar";
 import MiniSidebar from "../Sidebar/MiniSidebar";
+import { DrawerContext } from "../../contexts/sidebar-context";
 
 import "./MainHeader.css";
 
 const MainHeader = () => {
-  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const drawerCtx = useContext(DrawerContext);
   const toggleDrawerHandler = () => {
-    setDrawerIsOpen((prevState) => !prevState);
+    if (drawerCtx.drawerIsOpen) {
+      drawerCtx.closeDrawer();
+    } else {
+      drawerCtx.openDrawer();
+    }
   };
-  let mainHeaderClasses = drawerIsOpen ? 'main-header' : 'mini-main-header'
+  let mainHeaderClasses = drawerCtx.drawerIsOpen
+    ? "main-header"
+    : "mini-main-header";
   return (
     <div className={mainHeaderClasses}>
-      {drawerIsOpen && <Sidebar />}
-      {!drawerIsOpen && <MiniSidebar />}
+      {drawerCtx.drawerIsOpen && <Sidebar />}
+      {!drawerCtx.drawerIsOpen && <MiniSidebar />}
       <div className="main-header-left">
         <button className="main-header-hamburger" onClick={toggleDrawerHandler}>
           <span />

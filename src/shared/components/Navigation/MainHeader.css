@@ -3,7 +3,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 3rem;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
 }
 
 .mini-main-header {
@@ -11,10 +15,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem 3rem;
-  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 999;
 }
 
-.mini-main-header::after {
+ .mini-main-header::after {
   content: "";
   height: 2px;
   width: calc(100% - 88px);
@@ -34,7 +42,7 @@
   background-color: #ccc;
   top: 63px;
   left: 253px;
-}
+} 
 
 .main-header-left {
   display: flex;

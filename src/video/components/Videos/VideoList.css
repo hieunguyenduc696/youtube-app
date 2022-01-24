@@ -1,0 +1,18 @@
+.video-list-mini {
+  margin-top: 6rem;
+  margin-left: 240px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  width: calc(100% - 240px);
+  gap: 25px;
+}
+.video-list {
+  margin-top: 6rem;
+  margin-left: 88px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  width: calc(100% - 88px);
+  gap: 25px;
+}
