@@ -39,15 +39,13 @@
   margin-left: 10px;
   display: flex;
   align-items: center;
-  width: 50px;
-  height: 40px;
   background-color: white;
   cursor: pointer;
 }
 
 .main-header-logo__image {
-  width: 100%;
-  height: 100%;
+  width: 50px;
+  height: 40px;
   background-color: white;
 }
 
