@@ -1,0 +1,127 @@
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: relative;
+}
+
+.main-header::after {
+  content: "";
+  height: 2px;
+  width: calc(100% - 56px);
+  color: #ccc;
+  position: absolute;
+  background-color: #ccc;
+  top: 63px;
+  left: 56px;
+}
+
+.main-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.main-header-hamburger {
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.main-header-hamburger span {
+  display: block;
+  width: 20px;
+  margin-bottom: 4px;
+  height: 1px;
+  background-color: black;
+}
+
+.main-header-logo {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 40px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.main-header-logo__image {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.main-header-logo__text {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 1.2rem;
+}
+
+.main-header-mid {
+  display: flex;
+  align-items: center;
+}
+
+.main-header-search {
+  display: flex;
+  align-items: center;
+}
+
+.main-header-search__input {
+  width: 600px;
+  padding: 1rem;
+  outline: none;
+  font-size: 16px;
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+
+.main-header-search__input:focus,
+.main-header-search__input:active {
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 1%), 0 0 8px rgb(34 139 230 / 50%);
+  border-color: #4dabf7;
+  outline: none;
+}
+
+.main-header-search__icon {
+  padding: 0.2rem;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-left: none;
+  width: 60px;
+  text-align: center;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+
+.main-header-search__icon svg {
+  color: black;
+  font-weight: 200;
+}
+
+.main-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.main-header-video {
+  margin-right: 40px;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.main-header-avatar {
+  height: 36px;
+  width: 36px;
+  border: 1px solid #eee;
+  border-radius: 100rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.main-header-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

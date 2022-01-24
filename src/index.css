@@ -21,3 +21,10 @@ ul {
 a {
   text-decoration: none;
 }
+
+svg {
+  height: 30px;
+  width: 30px;
+  font-weight: 200;
+  
+}

@@ -7,10 +7,12 @@ import {
 } from "react-router-dom";
 import Videos from "./video/pages/Videos";
 import NewVideo from "./video/pages/NewVideo";
+import MainHeader from "./shared/components/Navigation/MainHeader";
 
 function App() {
   return (
     <Router>
+      <MainHeader />
       <Switch>
         <Route path="/" exact>
           <Videos />
