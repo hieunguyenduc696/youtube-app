@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { DrawerContext } from "../../../shared/contexts/sidebar-context";
 
 import Input from "../../../shared/components/FormElements/Input";
+import { VALIDATOR_REQUIRE } from "../../../shared/utils/validators";
 
 import "./NewVideoForm.css";
 
@@ -16,7 +17,7 @@ const NewVideoForm = () => {
         element="input"
         type="text"
         label="Title"
-        validators={[]}
+        validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
       />
     </form>

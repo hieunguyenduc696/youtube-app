@@ -73,7 +73,7 @@ const MainHeader = () => {
         <div className="main-header-avatar">
           <img
             className="main-header-avatar__image"
-            src="https://lh3.googleusercontent.com/a-/AOh14GgsCLB46_vvZ3dbgDBq6QRjsr1bhfznFiCRMeRWsg=s360-p-rw-no"
+            src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
             alt="user-avatar"
           />
         </div>
