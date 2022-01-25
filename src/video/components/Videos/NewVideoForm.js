@@ -1,15 +1,65 @@
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useReducer } from "react";
 import { DrawerContext } from "../../../shared/contexts/sidebar-context";
 
 import Input from "../../../shared/components/FormElements/Input";
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../../shared/utils/validators";
+import Button from "../../../shared/components/FormElements/Button";
+import {
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_REQUIRE,
+} from "../../../shared/utils/validators";
 
 import "./NewVideoForm.css";
 
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case "INPUT_CHANGE":
+      let formIsValid = true;
+      for (const inputId in state.inputs) {
+        if (inputId === action.inputId) {
+          formIsValid = formIsValid && action.isValid;
+        } else {
+          formIsValid = formIsValid && state.inputs[inputId].isValid;
+        }
+      }
+
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          [action.inputId]: { value: action.value, isValid: action.isValid },
+        },
+        isValid: formIsValid,
+      };
+    default:
+      return state;
+  }
+};
+
 const NewVideoForm = () => {
   const drawerCtx = useContext(DrawerContext);
+  const [formState, dispatch] = useReducer(formReducer, {
+    inputs: {
+      title: {
+        value: "",
+        isValid: false,
+      },
+      description: {
+        value: "",
+        isValid: false,
+      },
+    },
+    isValid: false,
+  });
 
-  const titleInputHandler = useCallback((id, value, isValid) => {}, []);
+  const inputHandler = useCallback((id, value, isValid) => {
+    dispatch({
+      type: "INPUT_CHANGE",
+      inputId: id,
+      value: value,
+      isValid: isValid,
+    });
+    console.log(formState.isValid);
+  }, []);
 
   const videoFormClasses = drawerCtx.drawerIsOpen
     ? "new-video-form-mini video-form"
@@ -23,16 +73,20 @@ const NewVideoForm = () => {
         label="Title"
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
-        onInput={titleInputHandler}
+        onInput={inputHandler}
       />
       <Input
+        id="description"
         title="description"
         element="textarea"
         label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (at least 5 characters)."
-        onInput={titleInputHandler}
+        onInput={inputHandler}
       />
+      <Button type="submit" disabled={!formState.isValid}>
+        ADD VIDEO
+      </Button>
     </form>
   );
 };
