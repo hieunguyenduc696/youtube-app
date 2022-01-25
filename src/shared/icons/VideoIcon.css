@@ -1,0 +1,18 @@
+.video-icon-btn {
+    border: none;
+    background-color: white;
+    position: relative;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 100rem;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    transition: all 0.7s ease;
+    border: 1px solid white;
+}
+
+.video-icon-btn:active {
+    background-color: gray;
+    border: 1px solid #eee;
+}

@@ -8,6 +8,7 @@
   left: 0;
   right: 0;
   z-index: 999;
+  background-color: white;
 }
 
 .mini-main-header {
@@ -20,6 +21,7 @@
   right: 0;
   position: fixed;
   z-index: 999;
+  background-color: white;
 }
 
  .mini-main-header::after {
@@ -29,7 +31,7 @@
   color: #ccc;
   position: absolute;
   background-color: #ccc;
-  top: 63px;
+  top: 59px;
   left: 88px;
 }
 
@@ -40,13 +42,14 @@
   color: #ccc;
   position: absolute;
   background-color: #ccc;
-  top: 63px;
+  top: 59px;
   left: 253px;
 } 
 
 .main-header-left {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .main-header-hamburger {
@@ -77,6 +80,8 @@
   align-items: center;
   background-color: white;
   cursor: pointer;
+  color: black;
+  flex-shrink: 0;
 }
 
 .main-header-logo__image {
@@ -94,6 +99,7 @@
 .main-header-mid {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .main-header-search {
