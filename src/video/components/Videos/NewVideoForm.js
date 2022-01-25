@@ -58,14 +58,17 @@ const NewVideoForm = () => {
       value: value,
       isValid: isValid,
     });
-    console.log(formState.isValid);
   }, []);
 
+  const videoSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
   const videoFormClasses = drawerCtx.drawerIsOpen
     ? "new-video-form-mini video-form"
     : "new-video-form video-form";
   return (
-    <form className={videoFormClasses}>
+    <form className={videoFormClasses} onSubmit={videoSubmitHandler}>
       <Input
         id="title"
         element="input"
