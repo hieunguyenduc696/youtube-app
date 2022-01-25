@@ -38,9 +38,3 @@
   color: black;
 }
 
-.sidebar-item a.active i,
-.sidebar-item a:active i,
-.sidebar-item a:focus  i{
-  background-color: red;
-}
-

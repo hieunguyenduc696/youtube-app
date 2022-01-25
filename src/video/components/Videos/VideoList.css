@@ -8,6 +8,11 @@
   gap: 25px;
   background-color: #F9F9F9;
 }
+
+.video-list-small {
+  margin-left: 20px;
+}
+
 .video-list {
   margin-top: 6rem;
   margin-left: 88px;

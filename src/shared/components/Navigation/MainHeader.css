@@ -101,7 +101,12 @@
 .main-header-mid {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  /* flex: 1;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);;
+  flex-shrink: 0; */
 }
 
 .main-header-search {
@@ -145,6 +150,7 @@
 .main-header-right {
   display: flex;
   align-items: center;
+  float: right;
 }
 
 .main-header-video {

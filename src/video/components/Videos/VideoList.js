@@ -8,9 +8,13 @@ import "./VideoList.css";
 const VideoList = (props) => {
   const drawerCtx = useContext(DrawerContext);
   const { videos } = props;
-  const videoListClasses = drawerCtx.drawerIsOpen
+  let videoListClasses = drawerCtx.drawerIsOpen
     ? "video-list-mini"
     : "video-list";
+  videoListClasses = props.small ? "video-list-small" : videoListClasses;
+  if (!videos || videos.length === 0) {
+    return <p>Loading...</p>
+  }
   return (
     <ul className={videoListClasses}>
       {videos.map((video) => (
@@ -22,6 +26,7 @@ const VideoList = (props) => {
           author={video.author}
           image={video.image}
           views={video.views}
+          small={props.small}
         />
       ))}
     </ul>

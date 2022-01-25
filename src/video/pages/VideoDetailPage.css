@@ -1,17 +1,15 @@
-.form-wrapper-mini {
+.video-detail-page-mini {
   height: 100vh;
   margin-left: 240px;
   width: calc(100% - 240px);
-  background-color: #F9F9F9;
-  padding-top: 8rem;
+  background-color: #f9f9f9;
   margin-top: 6rem;
 }
 
-.form-wrapper {
+.video-detail-page {
   height: 100vh;
   margin-left: 88px;
   width: calc(100% - 88px);
-  background-color: #F9F9F9;
-  padding-top: 8rem;
+  background-color: #f9f9f9;
   margin-top: 6rem;
 }

@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import Videos from "./video/pages/Videos";
 import NewVideo from "./video/pages/NewVideo";
+import VideoDetailPage from "./video/pages/VideoDetailPage";
+
 import MainHeader from "./shared/components/Navigation/MainHeader";
 import { DrawerContext } from "./shared/contexts/sidebar-context";
 
@@ -14,10 +16,10 @@ function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
-  });
+  }, []);
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
-  });
+  }, []);
   return (
     <DrawerContext.Provider
       value={{
@@ -34,6 +36,9 @@ function App() {
           </Route>
           <Route path="/videos/new" exact>
             <NewVideo />
+          </Route>
+          <Route path="/:vid">
+            <VideoDetailPage />
           </Route>
           <Redirect to="/" />
         </Switch>
