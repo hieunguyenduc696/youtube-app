@@ -1,0 +1,11 @@
+.form-wrapper-mini {
+  height: 100vh;
+  margin-left: 240px;
+  width: calc(100% - 240px);
+}
+
+.form-wrapper {
+  height: 100vh;
+  margin-left: 88px;
+  width: calc(100% - 88px);
+}

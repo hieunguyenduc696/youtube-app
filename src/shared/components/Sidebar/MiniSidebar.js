@@ -12,11 +12,13 @@ const Sidebar = () => {
             <li className={styles["sidebar-item"]}>
               <NavLink to="/" exact>
                 <i className="fas fa-home"></i>
+                <span>Home</span>
               </NavLink>
             </li>
             <li className={styles['sidebar-item']}>
               <NavLink to="/feeds/explore">
                 <i className="fa fa-compass"></i>
+                <span>Explore</span>
               </NavLink>
             </li>
           </ul>

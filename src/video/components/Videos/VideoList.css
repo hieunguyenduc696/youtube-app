@@ -6,6 +6,7 @@
   grid-template-columns: repeat(4,1fr);
   width: calc(100% - 240px);
   gap: 25px;
+  background-color: #F9F9F9;
 }
 .video-list {
   margin-top: 6rem;
@@ -15,4 +16,5 @@
   grid-template-columns: repeat(4,1fr);
   width: calc(100% - 88px);
   gap: 25px;
+  background-color: #F9F9F9;
 }

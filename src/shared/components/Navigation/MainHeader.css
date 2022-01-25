@@ -9,6 +9,7 @@
   right: 0;
   z-index: 999;
   background-color: white;
+  width: 100%;
 }
 
 .mini-main-header {
@@ -22,6 +23,7 @@
   position: fixed;
   z-index: 999;
   background-color: white;
+  width: 100%;
 }
 
  .mini-main-header::after {
