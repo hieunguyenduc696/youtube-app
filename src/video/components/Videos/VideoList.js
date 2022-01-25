@@ -27,6 +27,7 @@ const VideoList = (props) => {
           image={video.image}
           views={video.views}
           small={props.small}
+          videoId={video.videoId}
         />
       ))}
     </ul>

@@ -5,6 +5,8 @@ import VideoList from "./VideoList";
 
 const VideoDetail = (props) => {
   const video = props.video
+  console.log(video)
+  console.log(video[0].videoId)
   const videos = props.videos
   if (!video) {
     return <p>Loading...</p>;
@@ -18,7 +20,7 @@ const VideoDetail = (props) => {
         {video && <iframe
           width="870"
           height="530"
-          src={`https://www.youtube.com/embed/${video.videoId}`}
+          src={`https://www.youtube.com/embed/${video[0].videoId}`}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
