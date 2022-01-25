@@ -2,8 +2,8 @@
   padding: 2rem;
   width: 90%;
   background-color: white;
-  margin: 8rem auto;
-  max-width: 40rem;
+  margin: 0 auto;
+  max-width: 80rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
 }
@@ -11,8 +11,8 @@
   padding: 2rem;
   width: 90%;
   background-color: white;
-  margin: 8rem auto;
-  max-width: 40rem;
+  margin: 0 auto;
+  max-width: 80rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 6px;
 }
