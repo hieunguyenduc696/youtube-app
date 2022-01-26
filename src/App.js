@@ -8,6 +8,7 @@ import {
 import Videos from "./video/pages/Videos";
 import NewVideo from "./video/pages/NewVideo";
 import VideoDetailPage from "./video/pages/VideoDetailPage";
+import UpdateVideo from "./video/pages/UpdateVideo";
 
 import MainHeader from "./shared/components/Navigation/MainHeader";
 import { DrawerContext } from "./shared/contexts/sidebar-context";
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path="/videos/new" exact>
             <NewVideo />
+          </Route>
+          <Route path="/videos/:vid">
+            <UpdateVideo />
           </Route>
           <Route path="/:vid">
             <VideoDetailPage />

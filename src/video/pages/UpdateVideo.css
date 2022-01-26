@@ -1,0 +1,17 @@
+.update-video-mini {
+  height: 100vh;
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  background-color: #f9f9f9;
+  margin-top: 6rem;
+  padding-top: 2rem;
+}
+
+.update-video {
+  height: 100vh;
+  margin-left: 88px;
+  width: calc(100% - 88px);
+  background-color: #f9f9f9;
+  margin-top: 6rem;
+  padding-top: 2rem;
+}
