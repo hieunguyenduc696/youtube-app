@@ -1,10 +1,12 @@
 import { React, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-import UpdateVideoForm from "../components/Videos/UpdateVideoForm";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
-
+import { useForm } from "../../shared/hooks/form-hook";
+import Input from "../../shared/components/FormElements/Input";
+import Button from "../../shared/components/FormElements/Button";
+import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 import "./UpdateVideo.css";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const DUMMY_VIDEOS = [
   {
@@ -210,9 +212,52 @@ const UpdateVideo = () => {
 
   const videoId = useParams().vid;
   const identifiedVideo = DUMMY_VIDEOS.find((v) => v.id === videoId);
+
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: identifiedVideo.title,
+        isValid: true,
+      },
+      description: {
+        value: identifiedVideo.description,
+        isValid: true,
+      },
+    },
+    true
+  );
+  const videoUpdateSubmitHandler = (event) => {
+    event.preventDefault()
+    console.log(formState.inputs)
+  }
   return (
     <div className={updateVideoClasses}>
-      <UpdateVideoForm video={identifiedVideo} />
+      <form className="update-video-form" onSubmit={videoUpdateSubmitHandler}>
+        <Input
+          id="title"
+          element="input"
+          type="text"
+          label="Title"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid title."
+          onInput={inputHandler}
+          value={formState.inputs.title.value}
+          valid={formState.inputs.title.isValid}
+        />
+        <Input
+          id="description"
+          element="textarea"
+          label="Description"
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText="Please enter a valid description (min 5 characters)."
+          onInput={inputHandler}
+          value={formState.inputs.description.value}
+          valid={formState.inputs.description.isValid}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          UPDATE VIDEO
+        </Button>
+      </form>
     </div>
   );
 };
