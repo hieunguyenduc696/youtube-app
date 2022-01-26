@@ -1,4 +1,5 @@
 import VideoList from "../components/Videos/VideoList";
+import MainHeader from "../../shared/components/Navigation/MainHeader";
 
 const Videos = () => {
   const DUMMY_VIDEOS = [
@@ -201,6 +202,8 @@ const Videos = () => {
 
   return (
     <div>
+      <MainHeader />
+
       <VideoList videos={DUMMY_VIDEOS} />
     </div>
   );

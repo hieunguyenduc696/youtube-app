@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import SearchIcon from "../../icons/SearchIcon";
 import VideoIcon from "../../icons/VideoIcon";
@@ -7,7 +7,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import MiniSidebar from "../Sidebar/MiniSidebar";
 import { DrawerContext } from "../../contexts/sidebar-context";
 import SubMenu from "./SubMenu";
-import SideDrawer from "./SideDrawer";
 
 import "./MainHeader.css";
 import Backdrop from "../UIElement/Backdrop";
@@ -80,6 +79,10 @@ const MainHeader = () => {
             alt="user-avatar"
           />
         </div>
+        <Link className="main-header-login" to="/auth">
+          <i className="far fa-user"></i>
+          <span>Login</span>
+        </Link>
       </div>
     </div>
   );

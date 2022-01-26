@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import VideoDetail from "../components/Videos/VideoDetail";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
+import MainHeader from "../../shared/components/Navigation/MainHeader";
 
 import "./VideoDetailPage.css";
 
@@ -215,6 +216,8 @@ const VideoDetailPage = () => {
   const video = DUMMY_VIDEOS.filter((video) => video.id === videoId);
   return (
     <div className={videoDetailPageClasses}>
+      <MainHeader />
+
       <VideoDetail video={video} videos={DUMMY_VIDEOS} />
     </div>
   );

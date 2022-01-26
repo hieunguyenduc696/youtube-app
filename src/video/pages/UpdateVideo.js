@@ -233,19 +233,21 @@ const UpdateVideo = () => {
   const identifiedVideo = DUMMY_VIDEOS.find((v) => v.id === videoId);
 
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: identifiedVideo.title,
-          isValid: true,
+    if (identifiedVideo) {
+      setFormData(
+        {
+          title: {
+            value: identifiedVideo.title,
+            isValid: true,
+          },
+          description: {
+            value: identifiedVideo.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: identifiedVideo.description,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
     setIsLoading(false);
   }, [setFormData, identifiedVideo]);
 

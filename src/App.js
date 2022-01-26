@@ -10,8 +10,8 @@ import NewVideo from "./video/pages/NewVideo";
 import VideoDetailPage from "./video/pages/VideoDetailPage";
 import UpdateVideo from "./video/pages/UpdateVideo";
 
-import MainHeader from "./shared/components/Navigation/MainHeader";
 import { DrawerContext } from "./shared/contexts/sidebar-context";
+import Auth from "./user/pages/Auth";
 
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
@@ -21,6 +21,7 @@ function App() {
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
+
   return (
     <DrawerContext.Provider
       value={{
@@ -30,7 +31,6 @@ function App() {
       }}
     >
       <Router>
-        <MainHeader />
         <Switch>
           <Route path="/" exact>
             <Videos />
@@ -40,6 +40,9 @@ function App() {
           </Route>
           <Route path="/videos/:vid">
             <UpdateVideo />
+          </Route>
+          <Route path="/auth">
+            <Auth />
           </Route>
           <Route path="/:vid">
             <VideoDetailPage />
