@@ -47,6 +47,10 @@ const NewVideoForm = () => {
         value: "",
         isValid: false,
       },
+      videoId: {
+        value: "",
+        isValid: false,
+      },
     },
     isValid: false,
   });
