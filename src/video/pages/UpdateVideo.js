@@ -1,11 +1,14 @@
-import { React, useContext } from "react";
+import { React, useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
 import { useForm } from "../../shared/hooks/form-hook";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/utils/validators";
+import {
+  VALIDATOR_MINLENGTH,
+  VALIDATOR_REQUIRE,
+} from "../../shared/utils/validators";
 import "./UpdateVideo.css";
 
 const DUMMY_VIDEOS = [
@@ -206,30 +209,55 @@ const DUMMY_VIDEOS = [
 ];
 const UpdateVideo = () => {
   const drawerCtx = useContext(DrawerContext);
+  const [isLoading, setIsLoading] = useState(true);
   const updateVideoClasses = drawerCtx.drawerIsOpen
     ? "update-video-mini"
     : "update-video";
 
   const videoId = useParams().vid;
-  const identifiedVideo = DUMMY_VIDEOS.find((v) => v.id === videoId);
 
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: identifiedVideo.title,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       description: {
-        value: identifiedVideo.description,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
     },
-    true
+    false
   );
+
+  const identifiedVideo = DUMMY_VIDEOS.find((v) => v.id === videoId);
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: identifiedVideo.title,
+          isValid: true,
+        },
+        description: {
+          value: identifiedVideo.description,
+          isValid: true,
+        },
+      },
+      true
+    );
+    setIsLoading(false);
+  }, [setFormData, identifiedVideo]);
+
   const videoUpdateSubmitHandler = (event) => {
-    event.preventDefault()
-    console.log(formState.inputs)
+    event.preventDefault();
+    console.log(formState.inputs);
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
+
   return (
     <div className={updateVideoClasses}>
       <form className="update-video-form" onSubmit={videoUpdateSubmitHandler}>
