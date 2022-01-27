@@ -16,7 +16,7 @@ import Auth from "./user/pages/Auth";
 
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
   }, []);

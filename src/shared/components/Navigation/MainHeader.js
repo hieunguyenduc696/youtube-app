@@ -6,6 +6,7 @@ import VideoIcon from "../../icons/VideoIcon";
 import Sidebar from "../Sidebar/Sidebar";
 import MiniSidebar from "../Sidebar/MiniSidebar";
 import { DrawerContext } from "../../contexts/sidebar-context";
+import { AuthContext } from "../../contexts/auth-context";
 import SubMenu from "./SubMenu";
 
 import "./MainHeader.css";
@@ -13,6 +14,7 @@ import Backdrop from "../UIElement/Backdrop";
 
 const MainHeader = () => {
   const drawerCtx = useContext(DrawerContext);
+  const authCtx = useContext(AuthContext);
   const [submenuIsOpen, setSubmenuIsOpen] = useState(false);
   const toggleDrawerHandler = () => {
     if (drawerCtx.drawerIsOpen) {
@@ -62,27 +64,33 @@ const MainHeader = () => {
         </div>
       </div>
       <div className="main-header-right">
-        <div className="main-header-video">
-          <VideoIcon
-            onClick={toggleSubmenuHandler}
-            solid={submenuIsOpen ? "yes" : ""}
-          />
-          {submenuIsOpen && (
-            <SubMenu onToggleSubmenuHandler={toggleSubmenuHandler} />
-          )}
-          {submenuIsOpen && <Backdrop onClick={toggleSubmenuHandler} />}
-        </div>
-        <div className="main-header-avatar">
-          <img
-            className="main-header-avatar__image"
-            src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
-            alt="user-avatar"
-          />
-        </div>
-        <Link className="main-header-login" to="/auth">
-          <i className="far fa-user"></i>
-          <span>Login</span>
-        </Link>
+        {authCtx.isLoggedIn && (
+          <div className="main-header-video">
+            <VideoIcon
+              onClick={toggleSubmenuHandler}
+              solid={submenuIsOpen ? "yes" : ""}
+            />
+            {submenuIsOpen && (
+              <SubMenu onToggleSubmenuHandler={toggleSubmenuHandler} />
+            )}
+            {submenuIsOpen && <Backdrop onClick={toggleSubmenuHandler} />}
+          </div>
+        )}
+        {authCtx.isLoggedIn && (
+          <div className="main-header-avatar">
+            <img
+              className="main-header-avatar__image"
+              src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
+              alt="user-avatar"
+            />
+          </div>
+        )}
+        {!authCtx.isLoggedIn && (
+          <Link className="main-header-login" to="/auth">
+            <i className="far fa-user"></i>
+            <span>Login</span>
+          </Link>
+        )}
       </div>
     </div>
   );
