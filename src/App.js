@@ -43,6 +43,9 @@ function App() {
         <Route path="/videos/:vid">
           <UpdateVideo />
         </Route>
+        <Route path="/channel/:uid">
+          <VideoDetailPage />
+        </Route>
         <Route path="/:vid">
           <VideoDetailPage />
         </Route>

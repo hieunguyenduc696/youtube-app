@@ -1,0 +1,35 @@
+.user-menu-list {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 12rem;
+  width: 150px;
+  background-color: white;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  right: 0;
+  transition: all 0.2s ease;
+}
+
+.user-menu-item {
+  padding: 1rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.user-menu-item i {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.user-menu-item span {
+  font-size: 14px;
+  color: black;
+  font-weight: 700;
+}
+
+.user-menu-item:hover {
+  background-color: #eee;
+}

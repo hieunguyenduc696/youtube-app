@@ -8,14 +8,16 @@ import MiniSidebar from "../Sidebar/MiniSidebar";
 import { DrawerContext } from "../../contexts/sidebar-context";
 import { AuthContext } from "../../contexts/auth-context";
 import SubMenu from "./SubMenu";
+import Backdrop from "../UIElement/Backdrop";
+import UserMenu from "./UserMenu";
 
 import "./MainHeader.css";
-import Backdrop from "../UIElement/Backdrop";
 
 const MainHeader = () => {
   const drawerCtx = useContext(DrawerContext);
   const authCtx = useContext(AuthContext);
   const [submenuIsOpen, setSubmenuIsOpen] = useState(false);
+  const [userMenuIsOpen, setUserMenuIsOpen] = useState(false);
   const toggleDrawerHandler = () => {
     if (drawerCtx.drawerIsOpen) {
       drawerCtx.closeDrawer();
@@ -25,7 +27,12 @@ const MainHeader = () => {
   };
 
   const toggleSubmenuHandler = () => {
+    setUserMenuIsOpen(false)
     setSubmenuIsOpen((prevState) => !prevState);
+  };
+  const toggleUserMenuHandler = () => {
+    setSubmenuIsOpen(false)
+    setUserMenuIsOpen((prevState) => !prevState);
   };
 
   let mainHeaderClasses = drawerCtx.drawerIsOpen
@@ -82,9 +89,15 @@ const MainHeader = () => {
               className="main-header-avatar__image"
               src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
               alt="user-avatar"
+              onClick={toggleUserMenuHandler}
             />
-          </div>
-        )}
+            
+          </div>)}
+          {userMenuIsOpen && (
+            <UserMenu onToggleUserMenuHandler={toggleUserMenuHandler} />
+          )}
+          {userMenuIsOpen && <Backdrop onClick={toggleUserMenuHandler} />}
+        
         {!authCtx.isLoggedIn && (
           <Link className="main-header-login" to="/auth">
             <i className="far fa-user"></i>
