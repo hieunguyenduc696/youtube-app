@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { Fragment, useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -30,6 +30,41 @@ function App() {
     setIsLoggedIn(false);
   }, []);
 
+  let routes;
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Videos />
+        </Route>
+        <Route path="/videos/new" exact>
+          <NewVideo />
+        </Route>
+        <Route path="/videos/:vid">
+          <UpdateVideo />
+        </Route>
+        <Route path="/:vid">
+          <VideoDetailPage />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Videos />
+        </Route>
+        <Route path="/auth">
+          <Auth />
+        </Route>
+        <Route path="/:vid">
+          <VideoDetailPage />
+        </Route>
+        <Redirect to="/auth" />
+      </Switch>
+    );
+  }
   return (
     <AuthContext.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
@@ -41,26 +76,7 @@ function App() {
           closeDrawer: closeDrawer,
         }}
       >
-        <Router>
-          <Switch>
-            <Route path="/" exact>
-              <Videos />
-            </Route>
-            <Route path="/videos/new" exact>
-              <NewVideo />
-            </Route>
-            <Route path="/videos/:vid">
-              <UpdateVideo />
-            </Route>
-            <Route path="/auth">
-              <Auth />
-            </Route>
-            <Route path="/:vid">
-              <VideoDetailPage />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </Router>
+        <Router>{routes}</Router>
       </DrawerContext.Provider>
     </AuthContext.Provider>
   );

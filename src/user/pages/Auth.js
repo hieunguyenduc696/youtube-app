@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
 import {
@@ -7,11 +8,14 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/utils/validators";
 import { useForm } from "../../shared/hooks/form-hook";
-
-import "./Auth.css";
+import { AuthContext } from "../../shared/contexts/auth-context";
 import Button from "../../shared/components/FormElements/Button";
 
+import "./Auth.css";
+
 const Auth = () => {
+  const history = useHistory()
+  const authCtx = useContext(AuthContext)
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -54,7 +58,8 @@ const Auth = () => {
 
   const authSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+    authCtx.login()
+    history.push('/')
   };
   return (
     <div className="auth">
