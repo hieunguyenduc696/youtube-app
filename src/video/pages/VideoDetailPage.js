@@ -9,7 +9,7 @@ import "./VideoDetailPage.css";
 
 const DUMMY_VIDEOS = [
   {
-    id: "v1",
+    id: "0gdh5QJ83fY",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -18,11 +18,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "0gdh5QJ83fY",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v2",
+    id: "9V9I1KbJvs0",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -31,11 +30,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v3",
+    id: "ubT6qNnUmQw",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -44,11 +42,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v4",
+    id: "gg1bWTVGODg",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -57,11 +54,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v5",
+    id: "zayVTfRIqcs",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -70,11 +66,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v6",
+    id: "vPYaPNUnkqA",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -83,11 +78,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v7",
+    id: "eNq-Q73ilk0",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -96,11 +90,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v8",
+    id: "wp1ZltRNdJs",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -109,11 +102,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v9",
+    id: "6Jtn-H2mX4g",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -122,11 +114,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v10",
+    id: "BqfG0wSrVYY",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -135,11 +126,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v11",
+    id: "9_O6TSyYAlE",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -148,11 +138,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v12",
+    id: "zMxZovxcx-o",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -161,11 +150,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v13",
+    id: "lHCMnNhxDbw",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -174,11 +162,10 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v14",
+    id: "fS03nwOIAs8",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
     title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
@@ -187,20 +174,19 @@ const DUMMY_VIDEOS = [
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
   {
-    id: "v15",
+    id: "3_Rxnb_E_TI",
     image:
       "https://i.ytimg.com/vi/uZfcxvrsL28/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCGh7xxQbMgq8h-39aXVLVjDym0Vw",
-    title:
-      "Neymar Jr & Ronaldinho Most Creative & Smart Plays, Neymar Jr & Ronaldinho Most Creative & Smart Plays, Neymar Jr & Ronaldinho Most Creative & Smart Plays, Neymar Jr & Ronaldinho Most Creative & Smart Plays",
+    title: "Neymar Jr & Ronaldinho Most Creative & Smart Plays",
+    description:
+      "Please Subscribe if you Enjoy my videos it gives me motivation to make more videos. Turn notifications on and you will never miss a video again.",
     author: "RDHDComps",
     views: 4.7,
     createdAt: "8 months ago",
-    videoId: "uZfcxvrsL28",
-    like: 626,
+    likes: 626,
   },
 ];
 

@@ -14,8 +14,8 @@ import Button from "../../shared/components/FormElements/Button";
 import "./Auth.css";
 
 const Auth = () => {
-  const history = useHistory()
-  const authCtx = useContext(AuthContext)
+  const history = useHistory();
+  const authCtx = useContext(AuthContext);
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -56,10 +56,30 @@ const Auth = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const authSubmitHandler = (event) => {
+  const authSubmitHandler = async (event) => {
     event.preventDefault();
-    authCtx.login()
-    history.push('/')
+    if (isLoginMode) {
+    } else {
+      try {
+        const response = await fetch("http://localhost:5000/api/users/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        })
+
+        const responseData = await response.json()
+        console.log(responseData)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    authCtx.login();
+    history.push("/");
   };
   return (
     <div className="auth">
