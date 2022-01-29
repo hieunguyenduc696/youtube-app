@@ -4,6 +4,7 @@ import VideoList from "../components/Videos/VideoList";
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const DUMMY_VIDEOS = [
   {
@@ -188,37 +189,25 @@ const DUMMY_VIDEOS = [
   },
 ];
 const Videos = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
   const [loadedVideos, setLoadedVideos] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   useEffect(() => {
-    const sendRequest = async () => {
-      setIsLoading(true);
+    const fetchVideos = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/videos");
-
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/videos"
+        );
 
         setLoadedVideos(responseData.videos);
-      } catch (err) {
-        setError(err.message);
-      }
-      setIsLoading(false);
+      } catch (err) {}
     };
-    sendRequest();
-  }, []);
+    fetchVideos();
+  }, [sendRequest]);
 
-  const errorHandler = () => {
-    setError(null);
-  };
   return (
     <div>
       <MainHeader />
-      <ErrorModal error={error} onClear={errorHandler} />
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
