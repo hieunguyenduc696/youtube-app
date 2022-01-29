@@ -83,7 +83,5 @@
   border-radius: 1px;
   font-weight: bold;
   cursor: pointer;
-}
-
-.video-detail-right {
+  margin-left: auto;
 }
