@@ -1,0 +1,98 @@
+.channel-mini {
+  height: 100vh;
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  background-color: #f9f9f9;
+  padding-top: 6rem;
+}
+
+.channel {
+  height: 100vh;
+  margin-left: 88px;
+  width: calc(100% - 88px);
+  background-color: #f9f9f9;
+  padding-top: 6rem;
+}
+
+.channel-top {
+  padding: 1.6rem 7rem;
+  background-color: #F9F9F9;
+}
+
+.channel-top-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.channel-top-user-info {
+  display: flex;
+}
+
+.channel-top-user__image {
+  height: 80px;
+  width: 80px;
+  border-radius: 100rem;
+}
+
+.channel-top-user__name {
+  font-size: 26px;
+  margin-left: 25px;
+  font-weight: 400;
+}
+
+.channel-top-user__actions {
+  padding: 1rem 1.5rem;
+  color: white;
+  background-color: #065fd4;
+  font-size: 14px;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.channel-top-user__actions a {
+  color: white;
+}
+
+.channel-top-nav {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.channel-top-nav li {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #606060;
+  position: relative;
+  cursor: pointer;
+}
+
+.channel-top-nav li a {
+  color: #606060;
+  padding: 1rem 2.6rem;
+
+}
+
+.channel-top-nav li:hover,
+.channel-top-nav li:focus {
+  color: black;
+}
+
+.active {
+  background-color: #EBEBEB;
+  color: #030303 !important;
+  border-bottom: 2px solid #606060;
+}
+
+.channel-bottom {
+  padding: 1.6rem 7rem;
+  background-color: #F1F1F1;
+  height: 100%;
+}
+
+.channel-bottom span {
+  font-size: 16px;
+}

@@ -76,7 +76,7 @@ const Auth = () => {
           { "Content-Type": "application/json" }
         );
 
-        authCtx.login(responseData.user.id);
+        authCtx.login(responseData.user.id, responseData.user.name);
         history.push("/");
       } catch (err) {}
     } else {
@@ -92,7 +92,7 @@ const Auth = () => {
           { "Content-Type": "application/json" }
         );
 
-        authCtx.login(responseData.user.id);
+        authCtx.login(responseData.user.id, responseData.user.name);
         history.push("/");
       } catch (err) {}
     }

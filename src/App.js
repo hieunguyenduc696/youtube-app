@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +9,8 @@ import Videos from "./video/pages/Videos";
 import NewVideo from "./video/pages/NewVideo";
 import VideoDetailPage from "./video/pages/VideoDetailPage";
 import UpdateVideo from "./video/pages/UpdateVideo";
+import Channel from "./video/pages/Channel";
+import About from "./video/pages/About";
 
 import { DrawerContext } from "./shared/contexts/sidebar-context";
 import { AuthContext } from "./shared/contexts/auth-context";
@@ -18,6 +20,7 @@ function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [userName, setUserName] = useState("");
 
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
@@ -25,13 +28,15 @@ function App() {
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, uname) => {
     setIsLoggedIn(true);
     setUserId(uid);
+    setUserName(uname);
   }, []);
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserId(null);
+    setUserName("");
   }, []);
 
   let routes;
@@ -47,8 +52,11 @@ function App() {
         <Route path="/videos/:vid">
           <UpdateVideo />
         </Route>
-        <Route path="/channel/:uid">
-          <VideoDetailPage />
+        <Route path="/channel/:uid" exact>
+          <Channel />
+        </Route>
+        <Route path="/channel/:uid/about" exact>
+          <About />
         </Route>
         <Route path="/:vid">
           <VideoDetailPage />
@@ -65,6 +73,12 @@ function App() {
         <Route path="/auth">
           <Auth />
         </Route>
+        <Route path="/channel/:uid" exact>
+          <Channel />
+        </Route>
+        <Route path="/channel/:uid/about" exact>
+          <About />
+        </Route>
         <Route path="/:vid">
           <VideoDetailPage />
         </Route>
@@ -77,6 +91,7 @@ function App() {
       value={{
         isLoggedIn: isLoggedIn,
         userId: userId,
+        userName: userName,
         login: login,
         logout: logout,
       }}

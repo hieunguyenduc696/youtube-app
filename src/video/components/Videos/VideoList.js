@@ -12,6 +12,8 @@ const VideoList = (props) => {
     ? "video-list-mini"
     : "video-list";
   videoListClasses = props.small ? "video-list-small" : videoListClasses;
+
+  videoListClasses = props.channel ? "video-list-channel" : videoListClasses;
   if (!videos || videos.length === 0) {
     return <p>Loading...</p>
   }

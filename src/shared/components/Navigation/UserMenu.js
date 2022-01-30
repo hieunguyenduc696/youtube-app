@@ -9,7 +9,7 @@ const UserMenu = (props) => {
   const authCtx = useContext(AuthContext);
 
   const directToYourChannelPageHandler = () => {
-    history.push("/channel/u1");
+    history.push(`/channel/${authCtx.userId}`);
     props.onToggleUserMenuHandler();
   };
 
