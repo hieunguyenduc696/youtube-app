@@ -3,6 +3,7 @@ import { Link, NavLink, useParams } from "react-router-dom";
 
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
+import { AuthContext } from "../../shared/contexts/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
@@ -12,6 +13,7 @@ import "./Channel.css";
 
 const Channel = () => {
   const drawerCtx = useContext(DrawerContext);
+  const authCtx = useContext(AuthContext);
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
@@ -69,7 +71,11 @@ const Channel = () => {
                 </div>
               </div>
               <div className="channel-top-user__actions">
-                <Link to="/">MANAGE VIDEOS</Link>
+                {authCtx.isLoggedIn && authCtx.userId === userId && (
+                  <Link to="/">MANAGE VIDEOS</Link>
+                )}
+                {!authCtx.isLoggedIn && <Link to="/auth" style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</Link>}
+                {authCtx.isLoggedIn && authCtx.userId !== userId && <button style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</button>}
               </div>
             </div>
 
@@ -80,7 +86,9 @@ const Channel = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={`/channel/${userId}/about`} exact>ABOUT</NavLink>
+                <NavLink to={`/channel/${userId}/about`} exact>
+                  ABOUT
+                </NavLink>
               </li>
             </ul>
           </div>

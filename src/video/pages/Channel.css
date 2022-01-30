@@ -43,15 +43,16 @@
 }
 
 .channel-top-user__actions {
-  padding: 1rem 1.5rem;
   color: white;
-  background-color: #065fd4;
   font-size: 14px;
   font-weight: bolder;
   cursor: pointer;
 }
 
-.channel-top-user__actions a {
+.channel-top-user__actions a,
+.channel-top-user__actions button {
+  padding: 1rem 1.5rem;
+  background-color: #065fd4;
   color: white;
 }
 
