@@ -20,7 +20,6 @@ function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
-  const [userName, setUserName] = useState("");
 
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
@@ -28,15 +27,13 @@ function App() {
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
-  const login = useCallback((uid, uname) => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
     setUserId(uid);
-    setUserName(uname);
   }, []);
   const logout = useCallback(() => {
     setIsLoggedIn(false);
     setUserId(null);
-    setUserName("");
   }, []);
 
   let routes;
@@ -91,7 +88,6 @@ function App() {
       value={{
         isLoggedIn: isLoggedIn,
         userId: userId,
-        userName: userName,
         login: login,
         logout: logout,
       }}

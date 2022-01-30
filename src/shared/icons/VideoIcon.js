@@ -10,11 +10,12 @@ const VideoIcon = (props) => {
       <button className="video-icon-btn" onClick={videoIconBtnHandler}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
         >
-          <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+          <path fill="none" d="M0 0H24V24H0z" />
+          <path d="M16 4c.552 0 1 .448 1 1v4.2l5.213-3.65c.226-.158.538-.103.697.124.058.084.09.184.09.286v12.08c0 .276-.224.5-.5.5-.103 0-.203-.032-.287-.09L17 14.8V19c0 .552-.448 1-1 1H2c-.552 0-1-.448-1-1V5c0-.552.448-1 1-1h14zM8 8v3H5v2h2.999L8 16h2l-.001-3H13v-2h-3V8H8z" />
         </svg>
       </button>
     );
@@ -24,17 +25,12 @@ const VideoIcon = (props) => {
     <button className="video-icon-btn" onClick={videoIconBtnHandler}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
         viewBox="0 0 24 24"
-        stroke="currentColor"
+        width="24"
+        height="24"
       >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-        />
+        <path fill="none" d="M0 0H24V24H0z" />
+        <path d="M16 4c.552 0 1 .448 1 1v4.2l5.213-3.65c.226-.158.538-.103.697.124.058.084.09.184.09.286v12.08c0 .276-.224.5-.5.5-.103 0-.203-.032-.287-.09L17 14.8V19c0 .552-.448 1-1 1H2c-.552 0-1-.448-1-1V5c0-.552.448-1 1-1h14zm-1 2H3v12h12V6zM8 8h2v3h3v2H9.999L10 16H8l-.001-3H5v-2h3V8zm13 .841l-4 2.8v.718l4 2.8V8.84z" />
       </svg>
     </button>
   );

@@ -40,11 +40,19 @@
 
 .sidebar-item a {
   padding: 1rem 3rem;
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
+}
+
+.sidebar-item a svg {
+  margin-right: 10px;
 }
 
 .active {
   background-color: #eee;
   font-weight: 600;
+}
+
+.active svg path {
 }

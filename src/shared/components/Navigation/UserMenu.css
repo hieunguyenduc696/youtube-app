@@ -1,7 +1,7 @@
 .user-menu-list {
   position: absolute;
   z-index: 1000;
-  margin-top: 12rem;
+  margin-top: 14rem;
   width: 150px;
   background-color: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);

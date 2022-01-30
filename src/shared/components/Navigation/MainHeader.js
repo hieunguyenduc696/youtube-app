@@ -12,6 +12,7 @@ import Backdrop from "../UIElement/Backdrop";
 import UserMenu from "./UserMenu";
 
 import "./MainHeader.css";
+import MenuIcon from "../../icons/MenuIcon";
 
 const MainHeader = () => {
   const drawerCtx = useContext(DrawerContext);
@@ -44,9 +45,7 @@ const MainHeader = () => {
       {!drawerCtx.drawerIsOpen && <MiniSidebar />}
       <div className="main-header-left">
         <button className="main-header-hamburger" onClick={toggleDrawerHandler}>
-          <span />
-          <span />
-          <span />
+          <MenuIcon />
         </button>
         <Link to="/" className="main-header-logo">
           <img
