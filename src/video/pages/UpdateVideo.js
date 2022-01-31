@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
+import { AuthContext } from "../../shared/contexts/auth-context";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -19,11 +20,13 @@ const UpdateVideo = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedVideo, setLoadedVideo] = useState();
   const drawerCtx = useContext(DrawerContext);
+  const authCtx = useContext(AuthContext);
   const updateVideoClasses = drawerCtx.drawerIsOpen
     ? "update-video-mini"
     : "update-video";
 
   const videoId = useParams().vid;
+  const history = useHistory();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -72,9 +75,20 @@ const UpdateVideo = () => {
       </div>
     );
   }
-  const videoUpdateSubmitHandler = (event) => {
+  const videoUpdateSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/videos/${videoId}`,
+        "PATCH",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+        }),
+        { "Content-Type": "application/json" }
+      );
+      history.push(`/channel/${authCtx.userId}/videos`);
+    } catch (err) {}
   };
 
   if (isLoading) {
