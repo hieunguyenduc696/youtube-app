@@ -1,9 +1,9 @@
 import React from "react";
 
 import "./DeleteIcon.css";
-const DeleteIcon = () => {
+const DeleteIcon = (props) => {
   const deleteVideoHandler = () => {
-    console.log("deleted");
+    props.onClick()
   };
   return (
     <span className="delete-icon">
