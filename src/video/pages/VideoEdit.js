@@ -56,8 +56,8 @@ const VideoEdit = () => {
                   </div>
                   <div className="video-edit-tools">
                     <EditIcon videoId={video.id} />
-                    <YoutubeIcon />
-                    <DeleteIcon />
+                    <YoutubeIcon videoId={video.id} />
+                    <DeleteIcon videoId={video.id} />
                   </div>
                 </div>
                 <div className="col date">{video.createdAt}</div>
