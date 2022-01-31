@@ -13,6 +13,7 @@ import {
 import "./UpdateVideo.css";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
+import MainHeader from "../../shared/components/Navigation/MainHeader";
 
 const UpdateVideo = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -62,7 +63,7 @@ const UpdateVideo = () => {
       } catch (err) {}
     };
     fetchVideo();
-  }, [sendRequest, videoId]);
+  }, [sendRequest, videoId, setFormData]);
 
   if (!loadedVideo && !error) {
     return (
@@ -77,39 +78,57 @@ const UpdateVideo = () => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!loadedVideo && !error) {
+    return (
+      <div className="center">
+        <h2>Could not find video!</h2>
+      </div>
+    );
   }
 
   return (
     <React.Fragment>
+      <MainHeader />
       <ErrorModal error={error} onClear={clearError} />
       <div className={updateVideoClasses}>
-        <form className="update-video-form" onSubmit={videoUpdateSubmitHandler}>
-          <Input
-            id="title"
-            element="input"
-            type="text"
-            label="Title"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a valid title."
-            onInput={inputHandler}
-            value={formState.inputs.title.value}
-            valid={formState.inputs.title.isValid}
-          />
-          <Input
-            id="description"
-            element="textarea"
-            label="Description"
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a valid description (min 5 characters)."
-            onInput={inputHandler}
-            value={formState.inputs.description.value}
-            valid={formState.inputs.description.isValid}
-          />
-          <Button type="submit" disabled={!formState.isValid}>
-            UPDATE VIDEO
-          </Button>
-        </form>
+        {!isLoading && loadedVideo && (
+          <form
+            className="update-video-form"
+            onSubmit={videoUpdateSubmitHandler}
+          >
+            <Input
+              id="title"
+              element="input"
+              type="text"
+              label="Title"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Please enter a valid title."
+              onInput={inputHandler}
+              value={loadedVideo.title}
+              valid={true}
+            />
+            <Input
+              id="description"
+              element="textarea"
+              label="Description"
+              validators={[VALIDATOR_MINLENGTH(5)]}
+              errorText="Please enter a valid description (min 5 characters)."
+              onInput={inputHandler}
+              value={loadedVideo.description}
+              valid={true}
+            />
+            <Button type="submit" disabled={!formState.isValid}>
+              UPDATE VIDEO
+            </Button>
+          </form>
+        )}
       </div>
     </React.Fragment>
   );

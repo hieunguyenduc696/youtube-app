@@ -1,0 +1,39 @@
+.edit-icon {
+  position: relative;
+}
+
+.edit-icon::after {
+  position: absolute;
+  content: "";
+  top: 18px;
+  left: -20px;
+  width: 40px;
+  background-color: transparent;
+  color: whitesmoke;
+  border-radius: 10px;
+  font-size: 8px;
+  padding: 0.5rem;
+  z-index: 999999;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.edit-icon-text {
+  position: absolute;
+  top: 26px;
+  left: -20px;
+  background-color: #444;
+  color: whitesmoke;
+  border-radius: 10px;
+  font-size: 8px;
+  padding: 0.5rem;
+  z-index: 999999;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.edit-icon:hover .edit-icon-text {
+  opacity: 1;
+}

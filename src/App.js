@@ -11,6 +11,7 @@ import VideoDetailPage from "./video/pages/VideoDetailPage";
 import UpdateVideo from "./video/pages/UpdateVideo";
 import Channel from "./video/pages/Channel";
 import About from "./video/pages/About";
+import VideoEdit from "./video/pages/VideoEdit";
 
 import { DrawerContext } from "./shared/contexts/sidebar-context";
 import { AuthContext } from "./shared/contexts/auth-context";
@@ -55,6 +56,9 @@ function App() {
         <Route path="/channel/:uid/about" exact>
           <About />
         </Route>
+        <Route path="/channel/:uid/videos" exact>
+          <VideoEdit />
+        </Route>
         <Route path="/:vid">
           <VideoDetailPage />
         </Route>
@@ -70,11 +74,17 @@ function App() {
         <Route path="/auth">
           <Auth />
         </Route>
+        <Route path="/videos/:vid">
+          <UpdateVideo />
+        </Route>
         <Route path="/channel/:uid" exact>
           <Channel />
         </Route>
         <Route path="/channel/:uid/about" exact>
           <About />
+        </Route>
+        <Route path="/channel/:uid/videos" exact>
+          <VideoEdit />
         </Route>
         <Route path="/:vid">
           <VideoDetailPage />

@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/auth-context";
 
 import "./UserMenu.css";
+import UserIcon from "../../icons/UserIcon";
+import SignOutIcon from "../../icons/SignOutIcon";
 
 const UserMenu = (props) => {
   const history = useHistory();
@@ -24,11 +26,12 @@ const UserMenu = (props) => {
   return (
     <ul className="user-menu-list">
       <li className="user-menu-item" onClick={directToYourChannelPageHandler}>
-        <span>YOUR CHANNEL</span>
+        <UserIcon />
+        <span>Your channel</span>
       </li>
       <li className="user-menu-item" onClick={logoutHandler}>
-        <i className="fas fa-sign-out-alt"></i>
-        <span>LOGOUT</span>
+        <SignOutIcon />
+        <span>Sign out</span>
       </li>
     </ul>
   );

@@ -34,7 +34,7 @@ const Channel = () => {
     const fetchVideos = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/videos"
+          `http://localhost:5000/api/videos/user/${userId}`
         );
         setLoadedVideos(responseData.videos);
       } catch (err) {}
@@ -72,7 +72,7 @@ const Channel = () => {
               </div>
               <div className="channel-top-user__actions">
                 {authCtx.isLoggedIn && authCtx.userId === userId && (
-                  <Link to="/">MANAGE VIDEOS</Link>
+                  <Link to={`/channel/${userId}/videos`}>MANAGE VIDEOS</Link>
                 )}
                 {!authCtx.isLoggedIn && <Link to="/auth" style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</Link>}
                 {authCtx.isLoggedIn && authCtx.userId !== userId && <button style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</button>}

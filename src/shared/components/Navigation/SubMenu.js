@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import UploadIcon from "../../icons/UploadIcon";
 
 import "./Submenu.css";
 
@@ -12,7 +13,7 @@ const SubMenu = (props) => {
   return (
     <ul className="submenu-list">
       <li className="submenu-item" onClick={directToUploadPageHandler}>
-        <i className="fa fa-upload"></i>
+        <UploadIcon />
         <span>Upload Video</span>
       </li>
     </ul>
