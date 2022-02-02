@@ -3,6 +3,7 @@ import { Link, NavLink, useParams } from "react-router-dom";
 
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
+import { AuthContext } from "../../shared/contexts/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
@@ -11,6 +12,7 @@ import "./Channel.css";
 
 const About = () => {
   const drawerCtx = useContext(DrawerContext);
+  const authCtx = useContext(AuthContext)
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
@@ -57,21 +59,42 @@ const About = () => {
                 </div>
               </div>
               <div className="channel-top-user__actions">
-                <Link to="/">MANAGE VIDEOS</Link>
+                {authCtx.isLoggedIn && authCtx.userId === userId && (
+                  <Link to={`/channel/${userId}/videos`}>MANAGE VIDEOS</Link>
+                )}
+                {!authCtx.isLoggedIn && (
+                  <Link
+                    to="/auth"
+                    style={{ backgroundColor: "#CC0000", border: "none" }}
+                  >
+                    SUBSCRIBE
+                  </Link>
+                )}
+                {authCtx.isLoggedIn && authCtx.userId !== userId && (
+                  <button
+                    style={{ backgroundColor: "#CC0000", border: "none" }}
+                  >
+                    SUBSCRIBE
+                  </button>
+                )}
               </div>
             </div>
 
             <ul className="channel-top-nav">
               <li>
-                <NavLink to={`/channel/${userId}`} exact>VIDEOS</NavLink>
+                <NavLink to={`/channel/${userId}`} exact>
+                  VIDEOS
+                </NavLink>
               </li>
               <li>
-                <NavLink to={`/channel/${userId}/about`} exact>ABOUT</NavLink>
+                <NavLink to={`/channel/${userId}/about`} exact>
+                  ABOUT
+                </NavLink>
               </li>
             </ul>
           </div>
           <div className="channel-bottom">
-            <span>This is your channel</span>
+            <span>This is {loadedUser.name} channel</span>
           </div>
         </div>
       )}

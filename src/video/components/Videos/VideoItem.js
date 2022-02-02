@@ -7,27 +7,29 @@ const VideoItem = (props) => {
   const avatarClasses = props.small
     ? "video-item-user-title__avatar-small"
     : "video-item-user-title__avatar";
-  const infoClasses = props.small ? 'video-item-info-small' : 'video-item-info'  
-  const usertitleClasses = props.small ? 'video-item-user-title-small' : 'video-item-user-title'
-  const thumbnails = props.small ? 'video-item__thumbnails-small' : 'video-item__thumbnails'
+  const infoClasses = props.small ? "video-item-info-small" : "video-item-info";
+  const usertitleClasses = props.small
+    ? "video-item-user-title-small"
+    : "video-item-user-title";
+  const thumbnails = props.small
+    ? "video-item__thumbnails-small"
+    : "video-item__thumbnails";
   return (
     <li className="video-item">
       <Link to={`/${props.id}`}>
         <div className={videoItemClasses}>
           <div className="video-item-top">
-            <img
-              src={props.image}
-              alt={props.title}
-              className={thumbnails}
-            />
+            <img src={props.image} alt={props.title} className={thumbnails} />
           </div>
           <div className="video-item-bottom">
             <div className={usertitleClasses}>
-              <img
-                src={props.image}
-                alt={props.title}
-                className={avatarClasses}
-              />
+              <Link to={`/channel/${props.author}`}>
+                <img
+                  src={props.image}
+                  alt={props.title}
+                  className={avatarClasses}
+                />
+              </Link>
               <h2 className="video-item-user-title__title">{props.title}</h2>
             </div>
             <div className={infoClasses}>

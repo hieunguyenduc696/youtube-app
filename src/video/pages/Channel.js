@@ -74,8 +74,21 @@ const Channel = () => {
                 {authCtx.isLoggedIn && authCtx.userId === userId && (
                   <Link to={`/channel/${userId}/videos`}>MANAGE VIDEOS</Link>
                 )}
-                {!authCtx.isLoggedIn && <Link to="/auth" style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</Link>}
-                {authCtx.isLoggedIn && authCtx.userId !== userId && <button style={{backgroundColor: '#CC0000'}}>SUBSCRIBE</button>}
+                {!authCtx.isLoggedIn && (
+                  <Link
+                    to="/auth"
+                    style={{ backgroundColor: "#CC0000", border: "none" }}
+                  >
+                    SUBSCRIBE
+                  </Link>
+                )}
+                {authCtx.isLoggedIn && authCtx.userId !== userId && (
+                  <button
+                    style={{ backgroundColor: "#CC0000", border: "none" }}
+                  >
+                    SUBSCRIBE
+                  </button>
+                )}
               </div>
             </div>
 

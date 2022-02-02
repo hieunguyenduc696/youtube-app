@@ -74,17 +74,11 @@ function App() {
         <Route path="/auth">
           <Auth />
         </Route>
-        <Route path="/videos/:vid">
-          <UpdateVideo />
-        </Route>
         <Route path="/channel/:uid" exact>
           <Channel />
         </Route>
         <Route path="/channel/:uid/about" exact>
           <About />
-        </Route>
-        <Route path="/channel/:uid/videos" exact>
-          <VideoEdit />
         </Route>
         <Route path="/:vid">
           <VideoDetailPage />
