@@ -49,6 +49,7 @@ const ImageUpload = (props) => {
         style={{ display: "none" }}
         accept=".jpg,.png,.jpeg"
         onChange={pickedHandler}
+        autoComplete="current-password"
       />
       <div className={`image-upload ${props.center && "center"}`}>
         <div className="image-upload__preview">
