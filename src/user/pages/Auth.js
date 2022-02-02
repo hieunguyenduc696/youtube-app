@@ -13,6 +13,7 @@ import Button from "../../shared/components/FormElements/Button";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 import "./Auth.css";
 
@@ -117,6 +118,7 @@ const Auth = () => {
                 errorText="Please enter a name."
               />
             )}
+            {!isLoginMode && <ImageUpload center id="image" />}
             <Input
               element="input"
               type="email"
