@@ -21,6 +21,7 @@ function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [userImage, setUserImage] = useState(false);
 
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
@@ -28,9 +29,10 @@ function App() {
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
-  const login = useCallback((uid) => {
+  const login = useCallback((uid, uimage = null) => {
     setIsLoggedIn(true);
     setUserId(uid);
+    setUserImage(uimage);
   }, []);
   const logout = useCallback(() => {
     setIsLoggedIn(false);
@@ -92,6 +94,7 @@ function App() {
       value={{
         isLoggedIn: isLoggedIn,
         userId: userId,
+        userImage: userImage,
         login: login,
         logout: logout,
       }}

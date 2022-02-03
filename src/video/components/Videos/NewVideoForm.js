@@ -13,6 +13,7 @@ import {
 import { useForm } from "../../../shared/hooks/form-hook";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import { AuthContext } from "../../../shared/contexts/auth-context";
+import VideoUpload from "../../../shared/components/FormElements/VideoUpload";
 
 import "./NewVideoForm.css";
 
@@ -30,31 +31,30 @@ const NewVideoForm = () => {
         value: "",
         isValid: false,
       },
-      videoId: {
-        value: "",
+      // videoId: {
+      //   value: "",
+      //   isValid: false,
+      // },
+      video: {
+        value: null,
         isValid: false,
       },
     },
     false
   );
 
-  const history = useHistory()
+  const history = useHistory();
 
   const videoSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      await sendRequest(
-        "http://localhost:5000/api/videos",
-        "POST",
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          videoId: formState.inputs.videoId.value,
-          author: authCtx.userId,
-        }),
-        {'Content-Type': 'application/json'}
-      );
-      history.push('/')
+      const formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("author", authCtx.userId);
+      formData.append("video", formState.inputs.video.value);
+      await sendRequest("http://localhost:5000/api/videos", "POST", formData);
+      history.push("/");
     } catch (err) {}
   };
   const videoFormClasses = drawerCtx.drawerIsOpen
@@ -82,7 +82,7 @@ const NewVideoForm = () => {
           errorText="Please enter a valid description (at least 5 characters)."
           onInput={inputHandler}
         />
-        <Input
+        {/* <Input
           id="videoId"
           element="input"
           type="text"
@@ -90,6 +90,12 @@ const NewVideoForm = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid videoId."
           onInput={inputHandler}
+        /> */}
+        <VideoUpload
+          center
+          id="video"
+          onInput={inputHandler}
+          errorText="Please provide a video."
         />
         <Button type="submit" disabled={!formState.isValid}>
           ADD VIDEO

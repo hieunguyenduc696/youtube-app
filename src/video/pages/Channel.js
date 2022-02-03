@@ -54,7 +54,7 @@ const Channel = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <MainHeader />
+      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
       {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedUser && loadedVideos && (
         <div className={channelClasses}>
@@ -63,7 +63,7 @@ const Channel = () => {
               <div className="channel-top-user-info">
                 <img
                   className="channel-top-user__image"
-                  src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
+                  src={`http://localhost:5000/${loadedUser.image}`}
                   alt={loadedUser.name}
                 />
                 <div className="channel-top-user__name">

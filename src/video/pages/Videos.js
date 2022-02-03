@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import VideoList from "../components/Videos/VideoList";
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/contexts/auth-context";
 
 const Videos = () => {
   const [loadedVideos, setLoadedVideos] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const authCtx = useContext(AuthContext)
+  const [loadedUser, setLoadedUser] = useState();
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -19,11 +23,24 @@ const Videos = () => {
       } catch (err) {}
     };
     fetchVideos();
-  }, [sendRequest]);
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${authCtx.userId}`
+        );
+
+        setLoadedUser(responseData.user);
+      } catch (err) {}
+    };
+    if (!authCtx.isLoggedIn) {
+      return;
+    }
+    fetchUser();
+  }, [sendRequest, authCtx.isLoggedIn, authCtx.userId]);
 
   return (
     <div>
-      <MainHeader />
+      {!isLoading && <MainHeader user={loadedUser} /> }
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <div className="center">

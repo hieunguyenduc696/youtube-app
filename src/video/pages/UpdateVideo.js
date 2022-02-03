@@ -19,6 +19,7 @@ import MainHeader from "../../shared/components/Navigation/MainHeader";
 const UpdateVideo = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedVideo, setLoadedVideo] = useState();
+  const [loadedUser, setLoadedUser] = useState();
   const drawerCtx = useContext(DrawerContext);
   const authCtx = useContext(AuthContext);
   const updateVideoClasses = drawerCtx.drawerIsOpen
@@ -66,7 +67,21 @@ const UpdateVideo = () => {
       } catch (err) {}
     };
     fetchVideo();
-  }, [sendRequest, videoId, setFormData]);
+
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${authCtx.userId}`
+        );
+
+        setLoadedUser(responseData.user);
+      } catch (err) {}
+    };
+    if (!authCtx.isLoggedIn) {
+      return;
+    }
+    fetchUser();
+  }, [sendRequest, videoId, setFormData, authCtx.isLoggedIn, authCtx.userId]);
 
   if (!loadedVideo && !error) {
     return (
@@ -91,7 +106,7 @@ const UpdateVideo = () => {
     } catch (err) {}
   };
 
-  if (isLoading) {
+  if (isLoading || !loadedUser) {
     return (
       <div className="center">
         <LoadingSpinner />
@@ -99,7 +114,7 @@ const UpdateVideo = () => {
     );
   }
 
-  if (!loadedVideo && !error) {
+  if (!loadedVideo && !error && !loadedUser) {
     return (
       <div className="center">
         <h2>Could not find video!</h2>
@@ -109,7 +124,7 @@ const UpdateVideo = () => {
 
   return (
     <React.Fragment>
-      <MainHeader />
+      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
       <ErrorModal error={error} onClear={clearError} />
       <div className={updateVideoClasses}>
         {!isLoading && loadedVideo && (

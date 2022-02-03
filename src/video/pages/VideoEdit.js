@@ -16,6 +16,7 @@ const VideoEdit = () => {
   const drawerCtx = useContext(DrawerContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedVideos, setLoadedVideos] = useState();
+  const [loadedUser, setLoadedUser] = useState();
 
   const videoEditClasses = drawerCtx.drawerIsOpen
     ? "video-edit-mini"
@@ -30,6 +31,17 @@ const VideoEdit = () => {
       } catch (err) {}
     };
     fetchVideos();
+
+    const fetchUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${userId}`
+        );
+
+        setLoadedUser(responseData.user);
+      } catch (err) {}
+    };
+    fetchUser();
   }, [sendRequest, userId]);
 
   const videoDeletedHandler = (deletedVideoId) => {
@@ -40,7 +52,7 @@ const VideoEdit = () => {
 
   return (
     <React.Fragment>
-      <MainHeader />
+      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedVideos && (
