@@ -30,6 +30,10 @@ function App() {
   }, []);
   const login = useCallback((uid, token) => {
     setToken(token);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: uid, token: token })
+    );
     setUserId(uid);
   }, []);
   const logout = useCallback(() => {
@@ -43,6 +47,9 @@ function App() {
       <Switch>
         <Route path="/" exact>
           <Videos />
+        </Route>
+        <Route path="/auth">
+          <Auth />
         </Route>
         <Route path="/videos/new" exact>
           <NewVideo />
