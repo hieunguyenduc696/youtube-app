@@ -72,6 +72,7 @@
   object-fit: cover;
   cursor: pointer;
   border-radius: 6px;
+  flex-shrink: 0;
 }
 
 .video-edit-info {
@@ -102,7 +103,6 @@
 
 .video-edit-tools {
   display: none;
-  /* transition: all .3s ease; */
   align-items: center;
   justify-content: space-evenly;
   width: 100%;

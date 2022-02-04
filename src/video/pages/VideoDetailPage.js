@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import VideoList from "../components/Videos/VideoList";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
@@ -15,6 +15,7 @@ const VideoDetailPage = () => {
   const [loadedVideo, setLoadedVideo] = useState();
   const [loadedVideos, setLoadedVideos] = useState();
   const [loadedUser, setLoadedUser] = useState();
+  const [loadedAuthor, setLoadedAuthor] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const drawerCtx = useContext(DrawerContext);
   const authCtx = useContext(AuthContext);
@@ -62,7 +63,21 @@ const VideoDetailPage = () => {
       return;
     }
     fetchUser();
-  }, [sendRequest, authCtx.isLoggedIn, authCtx.userId]);
+
+    const fetchAuthor = async () => {
+      try {
+        let responseData
+        if (loadedVideo) {
+          responseData = await sendRequest(
+            `http://localhost:5000/api/users/${loadedVideo.author}`
+          );
+        }
+
+        setLoadedAuthor(responseData.user);
+      } catch (err) {}
+    };
+    fetchAuthor();
+  }, [sendRequest, authCtx.isLoggedIn, authCtx.userId, loadedVideo]);
 
   return (
     <div className={videoDetailPageClasses}>
@@ -70,46 +85,41 @@ const VideoDetailPage = () => {
 
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && loadedVideos && loadedVideo && (
+      {!isLoading && loadedVideos && loadedVideo && loadedAuthor && (
         <div className="video-detail">
           <div className="video-detail-left">
-            {/* <iframe
-              width={videoDetailPageClasses === 'video-detail-page' ? "870" : "600"}
-              height={videoDetailPageClasses === 'video-detail-page' ? "530" : "500"}
-              src={`https://www.youtube.com/embed/${loadedVideo.videoId}`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe> */}
-            <video
-              controls
-              width={
-                videoDetailPageClasses === "video-detail-page" ? "870" : "600"
-              }
-              height={
-                videoDetailPageClasses === "video-detail-page" ? "530" : "500"
-              }
-              src={`http://localhost:5000/${loadedVideo.video}`}
-            ></video>
+            <div className="video-detail-left-video">
+              <video
+                controls
+                width={
+                  videoDetailPageClasses === "video-detail-page" ? "870" : "600"
+                }
+                height={
+                  videoDetailPageClasses === "video-detail-page" ? "530" : "500"
+                }
+                src={`http://localhost:5000/${loadedVideo.video}`}
+              ></video>
+            </div>
 
             <h2 className="video-detail-title">{loadedVideo.title}</h2>
             <div className="video-detail-views-date">
               <h3 className="video-detail-views">{loadedVideo.views}M views</h3>
-              <h3 className="video-detail-date">{loadedVideo.createdAt}</h3>
+              <h3 className="video-detail-date">{loadedVideo.date}</h3>
               <div className="video-detail-like-btn">
                 <i className="far fa-thumbs-up"></i>
                 {loadedVideo.like}
               </div>
             </div>
             <div className="video-detail-user">
-              <img
-                src={loadedVideo.image}
-                alt={loadedVideo.title}
-                className="video-detail-user-image"
-              />
+              <Link to={`/channel/${loadedVideo.author}`}>
+                <img
+                  src={`http://localhost:5000/${loadedVideo.image}`}
+                  alt={loadedVideo.title}
+                  className="video-detail-user-image"
+                />
+              </Link>
               <div className="video-detail-author">
-                <h1>{loadedVideo.author}</h1>
+                <h1>{loadedAuthor.name}</h1>
                 <p>{loadedVideo.description}</p>
               </div>
               <button className="video-detail-subscribe">SUBSCRIBE</button>

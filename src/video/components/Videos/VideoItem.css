@@ -6,6 +6,14 @@
   display: flex;
 }
 
+.video-item-top-small {
+  width: 40%
+}
+
+.video-item-bottom-small {
+  width: 60%;
+}
+
 .video-item a {
   color: black;
 }
@@ -17,6 +25,7 @@
 
 .video-item__thumbnails-small {
   height: 100px;
+  width: 100%;
 }
 
 .video-item-user-title {
@@ -25,8 +34,7 @@
 }
 
 .video-item-user-title-small {
-  margin: 0;
-  display: flex;
+  margin: 0 0 10px 0;
 }
 
 .video-item-user-title__avatar {

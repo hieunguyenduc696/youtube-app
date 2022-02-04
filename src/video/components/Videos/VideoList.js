@@ -24,7 +24,7 @@ const VideoList = (props) => {
           key={video.id}
           id={video.id}
           title={video.title}
-          createdAt={video.createdAt}
+          createdAt={video.date}
           author={video.author}
           image={video.image}
           views={video.views}

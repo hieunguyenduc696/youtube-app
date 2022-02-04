@@ -34,6 +34,8 @@ const VideoItem = (props) => {
   const thumbnails = props.small
     ? "video-item__thumbnails-small"
     : "video-item__thumbnails";
+  const top = props.small ? "video-item-top-small" : "video-item-top";
+  const bottom = props.small ? "video-item-bottom-small" : "video-item-bottom";
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -41,7 +43,7 @@ const VideoItem = (props) => {
       {!isLoading && loadedUser && (
         <li className="video-item">
           <div className={videoItemClasses}>
-            <div className="video-item-top">
+            <div className={top}>
               <Link to={`/${props.id}`}>
                 <img
                   src={`http://localhost:5000/${props.image}`}
@@ -50,7 +52,7 @@ const VideoItem = (props) => {
                 />
               </Link>
             </div>
-            <div className="video-item-bottom">
+            <div className={bottom}>
               <div className={usertitleClasses}>
                 <Link to={`/channel/${props.author}`}>
                   <img

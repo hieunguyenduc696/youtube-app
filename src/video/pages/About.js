@@ -16,6 +16,7 @@ const About = () => {
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
+  const [mainUser, setMainUser] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -28,7 +29,18 @@ const About = () => {
       } catch (err) {}
     };
     fetchUser();
-  }, [userId, sendRequest]);
+
+    const fetchMainUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${authCtx.userId}`
+        );
+
+        setMainUser(responseData.user);
+      } catch (err) {}
+    };
+    fetchMainUser();
+  }, [userId, sendRequest, authCtx.userId]);
 
   if (isLoading) {
     return (
@@ -42,7 +54,7 @@ const About = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <MainHeader />
+      <MainHeader user={mainUser} />
       {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedUser && (
         <div className={channelClasses}>
@@ -51,7 +63,7 @@ const About = () => {
               <div className="channel-top-user-info">
                 <img
                   className="channel-top-user__image"
-                  src="https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
+                  src={`http://localhost:5000/${loadedUser.image}`}
                   alt={loadedUser.name}
                 />
                 <div className="channel-top-user__name">
