@@ -19,9 +19,8 @@ import Auth from "./user/pages/Auth";
 
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(false);
   const [userId, setUserId] = useState(false);
-  const [userImage, setUserImage] = useState(false);
 
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
@@ -29,18 +28,17 @@ function App() {
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
-  const login = useCallback((uid, uimage = null) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
-    setUserImage(uimage);
   }, []);
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -92,9 +90,9 @@ function App() {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
         userId: userId,
-        userImage: userImage,
+        token: token,
         login: login,
         logout: logout,
       }}

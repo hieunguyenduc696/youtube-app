@@ -55,7 +55,9 @@ const NewVideoForm = () => {
       formData.append("author", authCtx.userId);
       formData.append("image", formState.inputs.image.value);
       formData.append("video", formState.inputs.video.value);
-      await sendRequest("http://localhost:5000/api/videos", "POST", formData);
+      await sendRequest("http://localhost:5000/api/videos", "POST", formData, {
+        Authorization: 'Bearer ' + authCtx.token
+      });
       history.push("/");
     } catch (err) {}
   };
