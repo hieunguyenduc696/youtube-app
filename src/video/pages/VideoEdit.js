@@ -69,7 +69,7 @@ const VideoEdit = () => {
             {loadedVideos.map((video) => (
               <div className="row" key={video.id}>
                 <div className="col video">
-                  <img src={video.image} alt={video.title} />
+                  <img src={`http://localhost:5000/${video.image}`} alt={video.title} />
                   <div className="video-edit-info">
                     <p>{video.title}</p>
                     <span>{video.description}</span>

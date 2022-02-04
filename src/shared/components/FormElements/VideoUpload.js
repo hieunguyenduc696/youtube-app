@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 
 import Button from "./Button";
 
-import "./ImageUpload.css";
+import "./VideoUpload.css";
 
 const VideoUpload = (props) => {
   const [file, setFile] = useState();
@@ -51,8 +51,8 @@ const VideoUpload = (props) => {
         onChange={pickedHandler}
         autoComplete="current-password"
       />
-      <div className={`image-upload ${props.center && "center"}`}>
-        <div className="image-upload__preview">
+      <div className={`video-upload ${props.center && "center"}`}>
+        <div className="video-upload__preview">
           {previewUrl && <video width="100%" height="100%" src={previewUrl} alt="Preview" controls></video>}
           {!previewUrl && <p>Please pick a video.</p>}
         </div>
@@ -60,7 +60,6 @@ const VideoUpload = (props) => {
           PICK VIDEO
         </Button>
       </div>
-      {!isValid && <p>{props.errorText}</p>}
     </div>
   );
 };

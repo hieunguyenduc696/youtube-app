@@ -70,7 +70,6 @@ const Auth = () => {
   const authSubmitHandler = async (event) => {
     event.preventDefault();
 
-
     if (isLoginMode) {
       try {
         const responseData = await sendRequest(
@@ -125,7 +124,13 @@ const Auth = () => {
               />
             )}
             {!isLoginMode && (
-              <ImageUpload center id="image" onInput={inputHandler} errorText="Please pick an image." />
+              <ImageUpload
+                center
+                id="image"
+                onInput={inputHandler}
+                errorText="Please pick an image."
+                text="Please pick an avatar."
+              />
             )}
             <Input
               element="input"

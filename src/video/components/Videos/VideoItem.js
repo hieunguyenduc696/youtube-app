@@ -44,7 +44,7 @@ const VideoItem = (props) => {
             <div className="video-item-top">
               <Link to={`/${props.id}`}>
                 <img
-                  src={props.image}
+                  src={`http://localhost:5000/${props.image}`}
                   alt={props.title}
                   className={thumbnails}
                 />

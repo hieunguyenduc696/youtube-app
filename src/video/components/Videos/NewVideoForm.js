@@ -14,6 +14,7 @@ import { useForm } from "../../../shared/hooks/form-hook";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import { AuthContext } from "../../../shared/contexts/auth-context";
 import VideoUpload from "../../../shared/components/FormElements/VideoUpload";
+import ImageUpload from "../../../shared/components/FormElements/ImageUpload";
 
 import "./NewVideoForm.css";
 
@@ -31,11 +32,11 @@ const NewVideoForm = () => {
         value: "",
         isValid: false,
       },
-      // videoId: {
-      //   value: "",
-      //   isValid: false,
-      // },
       video: {
+        value: null,
+        isValid: false,
+      },
+      image: {
         value: null,
         isValid: false,
       },
@@ -52,6 +53,7 @@ const NewVideoForm = () => {
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
       formData.append("author", authCtx.userId);
+      formData.append("image", formState.inputs.image.value);
       formData.append("video", formState.inputs.video.value);
       await sendRequest("http://localhost:5000/api/videos", "POST", formData);
       history.push("/");
@@ -82,20 +84,18 @@ const NewVideoForm = () => {
           errorText="Please enter a valid description (at least 5 characters)."
           onInput={inputHandler}
         />
-        {/* <Input
-          id="videoId"
-          element="input"
-          type="text"
-          label="VideoId"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid videoId."
-          onInput={inputHandler}
-        /> */}
         <VideoUpload
           center
           id="video"
           onInput={inputHandler}
           errorText="Please provide a video."
+        />
+        <ImageUpload
+          center
+          id="image"
+          onInput={inputHandler}
+          errorText="Please provide a thumbnail."
+          text="Please pick a thumbnail."
         />
         <Button type="submit" disabled={!formState.isValid}>
           ADD VIDEO

@@ -17,6 +17,7 @@ const Channel = () => {
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
+  const [mainUser, setMainUser] = useState()
   const [loadedVideos, setLoadedVideos] = useState();
 
   useEffect(() => {
@@ -31,6 +32,17 @@ const Channel = () => {
     };
     fetchUser();
 
+    const fetchMainUser = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/users/${authCtx.userId}`
+        );
+
+        setMainUser(responseData.user);
+      } catch (err) {}
+    };
+    fetchMainUser();
+
     const fetchVideos = async () => {
       try {
         const responseData = await sendRequest(
@@ -40,7 +52,7 @@ const Channel = () => {
       } catch (err) {}
     };
     fetchVideos();
-  }, [userId, sendRequest]);
+  }, [authCtx.userId, userId, sendRequest]);
 
   if (isLoading) {
     return (
@@ -54,7 +66,7 @@ const Channel = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
+      {!isLoading && loadedUser && <MainHeader user={mainUser} /> }
       {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedUser && loadedVideos && (
         <div className={channelClasses}>
