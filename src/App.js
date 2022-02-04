@@ -17,9 +17,12 @@ import { DrawerContext } from "./shared/contexts/sidebar-context";
 import { AuthContext } from "./shared/contexts/auth-context";
 import Auth from "./user/pages/Auth";
 
+let logoutTimer;
+
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
   const [token, setToken] = useState(false);
+  const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(false);
 
   const openDrawer = useCallback(() => {
@@ -34,7 +37,7 @@ function App() {
 
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-
+    setTokenExpirationDate(tokenExpirationDate);
     localStorage.setItem(
       "userData",
       JSON.stringify({
@@ -47,8 +50,19 @@ function App() {
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    setTokenExpirationDate(null);
     localStorage.removeItem("userData");
   }, []);
+
+  useEffect(() => {
+    if (token && tokenExpirationDate) {
+      const remainingTime =
+        tokenExpirationDate.getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [token, logout, tokenExpirationDate]);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
