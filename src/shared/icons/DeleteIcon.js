@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import Modal from "../../shared/components/UIElement/Modal";
 import Button from "../../shared/components/FormElements/Button";
 import { useHttpClient } from "../hooks/http-hook";
+import { AuthContext } from "../contexts/auth-context";
 
 import "./DeleteIcon.css";
 const DeleteIcon = (props) => {
   const { sendRequest } = useHttpClient();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const authCtx = useContext(AuthContext);
 
   const showDeleteWarningHandler = (videoId) => {
     setShowConfirmModal(true);
@@ -22,7 +24,9 @@ const DeleteIcon = (props) => {
     try {
       await sendRequest(
         `http://localhost:5000/api/videos/${props.videoId}`,
-        "DELETE"
+        "DELETE",
+        null,
+        { Authorization: "Bearer " + authCtx.token }
       );
       props.onDelete(props.videoId);
     } catch (err) {}

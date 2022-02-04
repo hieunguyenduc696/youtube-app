@@ -100,7 +100,10 @@ const UpdateVideo = () => {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
         }),
-        { "Content-Type": "application/json" }
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authCtx.token,
+        }
       );
       history.push(`/channel/${authCtx.userId}/videos`);
     } catch (err) {}
@@ -124,7 +127,7 @@ const UpdateVideo = () => {
 
   return (
     <React.Fragment>
-      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
+      {!isLoading && loadedUser && <MainHeader user={loadedUser} />}
       <ErrorModal error={error} onClear={clearError} />
       <div className={updateVideoClasses}>
         {!isLoading && loadedVideo && (
