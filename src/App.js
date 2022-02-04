@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -12,72 +12,21 @@ import UpdateVideo from "./video/pages/UpdateVideo";
 import Channel from "./video/pages/Channel";
 import About from "./video/pages/About";
 import VideoEdit from "./video/pages/VideoEdit";
+import Auth from "./user/pages/Auth";
 
 import { DrawerContext } from "./shared/contexts/sidebar-context";
 import { AuthContext } from "./shared/contexts/auth-context";
-import Auth from "./user/pages/Auth";
-
-let logoutTimer;
+import { useAuth } from "./shared/hooks/auth-hook";
 
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
-  const [token, setToken] = useState(false);
-  const [tokenExpirationDate, setTokenExpirationDate] = useState();
-  const [userId, setUserId] = useState(false);
-
+  const { token, login, logout, userId } = useAuth();
   const openDrawer = useCallback(() => {
     setDrawerIsOpen(true);
   }, []);
   const closeDrawer = useCallback(() => {
     setDrawerIsOpen(false);
   }, []);
-  const login = useCallback((uid, token, expirationDate) => {
-    setToken(token);
-    setUserId(uid);
-
-    const tokenExpirationDate =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-    setTokenExpirationDate(tokenExpirationDate);
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: uid,
-        token: token,
-        expiration: tokenExpirationDate.toISOString(),
-      })
-    );
-  }, []);
-  const logout = useCallback(() => {
-    setToken(null);
-    setUserId(null);
-    setTokenExpirationDate(null);
-    localStorage.removeItem("userData");
-  }, []);
-
-  useEffect(() => {
-    if (token && tokenExpirationDate) {
-      const remainingTime =
-        tokenExpirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(logout, remainingTime);
-    } else {
-      clearTimeout(logoutTimer);
-    }
-  }, [token, logout, tokenExpirationDate]);
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-    if (
-      storedData &&
-      storedData.token &&
-      new Date(storedData.expiration) > new Date()
-    ) {
-      login(
-        storedData.userId,
-        storedData.token,
-        new Date(storedData.expiration)
-      );
-    }
-  }, [login]);
 
   let routes;
   if (token) {

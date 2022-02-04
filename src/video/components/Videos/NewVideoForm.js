@@ -52,7 +52,6 @@ const NewVideoForm = () => {
       const formData = new FormData();
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
-      formData.append("author", authCtx.userId);
       formData.append("image", formState.inputs.image.value);
       formData.append("video", formState.inputs.video.value);
       await sendRequest("http://localhost:5000/api/videos", "POST", formData, {
