@@ -60,9 +60,11 @@
   font-size: 16px;
   cursor: pointer;
   margin-right: 5px;
+  display: flex;
+  align-items: center;
 }
 
-.video-detail-like-btn i {
+.video-detail-like-btn svg {
   margin-right: 5px;
 }
 

@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import VideoList from "../components/Videos/VideoList";
-import { DrawerContext } from "../../shared/contexts/sidebar-context";
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
+import LikedIcon from "../../shared/icons/LikedIcon";
+import LikeIcon from "../../shared/icons/LikeIcon";
+import { DrawerContext } from "../../shared/contexts/sidebar-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/contexts/auth-context";
 
@@ -16,6 +18,8 @@ const VideoDetailPage = () => {
   const [loadedVideos, setLoadedVideos] = useState();
   const [loadedUser, setLoadedUser] = useState();
   const [loadedAuthor, setLoadedAuthor] = useState();
+  const [likedUser, setLikedUser] = useState(false);
+  const [likes, setLikes] = useState(0);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const drawerCtx = useContext(DrawerContext);
   const authCtx = useContext(AuthContext);
@@ -33,10 +37,21 @@ const VideoDetailPage = () => {
           `http://localhost:5000/api/videos/${videoId}`
         );
         setLoadedVideo(responseData.video);
+        setLikes(responseData.video.likes.length);
+
+        if (
+          responseData.video.likes.findIndex(
+            (item) => item.user_id === authCtx.userId
+          ) >= 0
+        ) {
+          setLikedUser(true);
+        } else {
+          setLikedUser(false)
+        }
       } catch (err) {}
     };
     fetchVideo();
-  }, [sendRequest, videoId]);
+  }, [sendRequest, videoId, authCtx.userId]);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -49,7 +64,9 @@ const VideoDetailPage = () => {
       } catch (err) {}
     };
     fetchVideos();
+  }, [sendRequest]);
 
+  useEffect(() => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
@@ -63,10 +80,12 @@ const VideoDetailPage = () => {
       return;
     }
     fetchUser();
+  }, [sendRequest, authCtx.isLoggedIn, authCtx.userId]);
 
+  useEffect(() => {
     const fetchAuthor = async () => {
       try {
-        let responseData
+        let responseData;
         if (loadedVideo) {
           responseData = await sendRequest(
             `http://localhost:5000/api/users/${loadedVideo.author}`
@@ -77,7 +96,25 @@ const VideoDetailPage = () => {
       } catch (err) {}
     };
     fetchAuthor();
-  }, [sendRequest, authCtx.isLoggedIn, authCtx.userId, loadedVideo]);
+  }, [loadedVideo, sendRequest]);
+
+  const toggleLikeHandler = async () => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/videos/togglelike/${videoId}`,
+        "POST",
+        null,
+        { Authorization: "Bearer " + authCtx.token }
+      );
+      let liked = likedUser;
+      setLikedUser((prev) => !prev);
+      if (liked) {
+        setLikes((prev) => (prev = prev - 1));
+      } else {
+        setLikes((prev) => (prev = prev + 1));
+      }
+    } catch (err) {}
+  };
 
   return (
     <div className={videoDetailPageClasses}>
@@ -106,8 +143,12 @@ const VideoDetailPage = () => {
               <h3 className="video-detail-views">{loadedVideo.views}M views</h3>
               <h3 className="video-detail-date">{loadedVideo.date}</h3>
               <div className="video-detail-like-btn">
-                <i className="far fa-thumbs-up"></i>
-                {loadedVideo.like}
+                {likedUser ? (
+                  <LikedIcon onClick={toggleLikeHandler} />
+                ) : (
+                  <LikeIcon onClick={toggleLikeHandler} />
+                )}
+                <div>{likes}</div>
               </div>
             </div>
             <div className="video-detail-user">
