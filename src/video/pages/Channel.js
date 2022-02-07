@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
+import { Link, NavLink, useParams, useHistory } from "react-router-dom";
 
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import { DrawerContext } from "../../shared/contexts/sidebar-context";
@@ -17,8 +17,9 @@ const Channel = () => {
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
-  const [mainUser, setMainUser] = useState()
+  const [mainUser, setMainUser] = useState();
   const [loadedVideos, setLoadedVideos] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -62,11 +63,23 @@ const Channel = () => {
     );
   }
 
+  const directToUploadVideoPageHandler = () => {
+    if (authCtx.isLoggedIn && authCtx.userId === userId) {
+      history.push("/videos/new");
+    }
+  };
+
+  let text = "No video found.";
+
+  if (authCtx.isLoggedIn && userId === authCtx.userId) {
+    text = "No video found. Upload video?";
+  }
+
   const channelClasses = drawerCtx.drawerIsOpen ? "channel-mini" : "channel";
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      {!isLoading && loadedUser && <MainHeader user={mainUser} /> }
+      {!isLoading && loadedUser && <MainHeader user={mainUser} />}
       {isLoading && <LoadingSpinner asOverlay />}
       {!isLoading && loadedUser && loadedVideos && (
         <div className={channelClasses}>
@@ -119,7 +132,12 @@ const Channel = () => {
           </div>
           <div className="channel-bottom">
             <span>Uploads</span>
-            <VideoList videos={loadedVideos} channel="yes" />
+            <VideoList
+              videos={loadedVideos}
+              channel="yes"
+              directToUploadVideoPage={directToUploadVideoPageHandler}
+              text={text}
+            />
           </div>
         </div>
       )}

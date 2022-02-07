@@ -17,18 +17,36 @@ const VideoEdit = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedVideos, setLoadedVideos] = useState();
   const [loadedUser, setLoadedUser] = useState();
+  const [loadedComment, setLoadedComment] = useState();
 
   const videoEditClasses = drawerCtx.drawerIsOpen
     ? "video-edit-mini"
     : "video-edit";
   useEffect(() => {
     const fetchVideos = async () => {
+      let responseData;
       try {
-        const responseData = await sendRequest(
+        responseData = await sendRequest(
           `http://localhost:5000/api/videos/user/${userId}`
         );
         setLoadedVideos(responseData.videos);
+        console.log(responseData.videos);
       } catch (err) {}
+
+      if (responseData) {
+        responseData.videos.forEach(async (video) => {
+          try {
+            const responseData1 = await sendRequest(
+              `http://localhost:5000/api/videos/comment/${video.id}`
+            );
+            setLoadedComment((prev) =>
+              prev
+                ? [...prev, responseData1.items.comments.length]
+                : [responseData1.items.comments.length]
+            );
+          } catch (err) {}
+        });
+      }
     };
     fetchVideos();
 
@@ -50,12 +68,24 @@ const VideoEdit = () => {
     );
   };
 
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner asOverlay />
+      </div>
+    );
+  }
+
   return (
     <React.Fragment>
-      {!isLoading && loadedUser && <MainHeader user={loadedUser} /> }
+      {!isLoading && loadedUser && <MainHeader user={loadedUser} />}
       <ErrorModal error={error} onClear={clearError} />
-      {isLoading && <LoadingSpinner asOverlay />}
-      {!isLoading && loadedVideos && (
+      {!isLoading && (!loadedVideos || loadedVideos.length === 0) && (
+        <div className={`no-video-found-1`}>
+          No video found.
+        </div>
+      )}
+      {!isLoading && loadedVideos && loadedComment && (
         <div className={videoEditClasses}>
           <h1>Channel content</h1>
           <div className="container">
@@ -66,10 +96,13 @@ const VideoEdit = () => {
               <div className="col">Comments</div>
               <div className="col">Likes</div>
             </div>
-            {loadedVideos.map((video) => (
+            {loadedVideos.map((video, index) => (
               <div className="row" key={video.id}>
                 <div className="col video">
-                  <img src={`http://localhost:5000/${video.image}`} alt={video.title} />
+                  <img
+                    src={`http://localhost:5000/${video.image}`}
+                    alt={video.title}
+                  />
                   <div className="video-edit-info">
                     <p>{video.title}</p>
                     <span>{video.description}</span>
@@ -83,10 +116,10 @@ const VideoEdit = () => {
                     />
                   </div>
                 </div>
-                <div className="col date">{video.createdAt}</div>
+                <div className="col date">{video.date}</div>
                 <div className="col views">200</div>
-                <div className="col comments">0</div>
-                <div className="col likes">10</div>
+                <div className="col comments">{loadedComment[index]}</div>
+                <div className="col likes">{video.likes.length}</div>
               </div>
             ))}
           </div>

@@ -111,7 +111,6 @@ const VideoDetailPage = () => {
         }
 
         setComments(responseData.items.comments);
-        console.log(responseData.items.comments);
       } catch (err) {}
     };
     fetchComment();
@@ -136,8 +135,8 @@ const VideoDetailPage = () => {
   };
 
   const onCommentHandler = (comment) => {
-    setComments(prev => prev ? [comment, ...prev] : [comment])
-  }
+    setComments((prev) => (prev ? [comment, ...prev] : [comment]));
+  };
 
   return (
     <div className={videoDetailPageClasses}>
@@ -190,8 +189,13 @@ const VideoDetailPage = () => {
             </div>
 
             {/* Comment */}
-            {!isLoading && <Comment user={loadedUser} comments={comments} commentHandler={onCommentHandler} />}
-            
+            {!isLoading && (
+              <Comment
+                user={loadedUser}
+                comments={comments}
+                commentHandler={onCommentHandler}
+              />
+            )}
           </div>
           <div className="video-detail-right">
             <VideoList videos={loadedVideos} small="yes" />

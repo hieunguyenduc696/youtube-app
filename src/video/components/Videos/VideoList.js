@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import VideoItem from "./VideoItem";
-
+import LoadingSpinner from "../../../shared/components/UIElement/LoadingSpinner";
 import { DrawerContext } from "../../../shared/contexts/sidebar-context";
 
 import "./VideoList.css";
@@ -14,8 +14,25 @@ const VideoList = (props) => {
   videoListClasses = props.small ? "video-list-small" : videoListClasses;
 
   videoListClasses = props.channel ? "video-list-channel" : videoListClasses;
-  if (!videos || videos.length === 0) {
-    return <p>Loading...</p>
+  if (!videos) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+  const onClickUploadBtnHandler = () => {
+    props.directToUploadVideoPage()
+  };
+  if (videos.length === 0) {
+    return (
+      <div
+        className="center no-video-found"
+        onClick={onClickUploadBtnHandler}
+      >
+        {props.text}
+      </div>
+    );
   }
   return (
     <ul className={videoListClasses}>

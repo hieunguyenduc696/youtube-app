@@ -51,6 +51,10 @@ const Comment = (props) => {
     } catch (err) {}
   };
 
+  const cancelCommentHandler = () => {
+    
+  };
+
   const user = props.user;
   const comments = props.comments;
   return (
@@ -89,7 +93,11 @@ const Comment = (props) => {
             </div>
             <div className="comment-container-row">
               <div className="comment-container__actions">
-                <button className="comment-container__actions-cancel">
+                <button
+                  className="comment-container__actions-cancel"
+                  type="button"
+                  onClick={cancelCommentHandler}
+                >
                   CANCEL
                 </button>
                 <Button

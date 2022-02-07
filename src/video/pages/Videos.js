@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import VideoList from "../components/Videos/VideoList";
 import MainHeader from "../../shared/components/Navigation/MainHeader";
@@ -38,6 +39,16 @@ const Videos = () => {
     fetchUser();
   }, [sendRequest, authCtx.isLoggedIn, authCtx.userId]);
 
+  const history = useHistory()
+  const directToUploadVideoPageHandler = () => {
+    console.log('ehehehhe')
+    if (authCtx.isLoggedIn) {
+      history.push("/videos/new");
+    } else {
+      history.push("/auth");
+    }
+  };
+
   return (
     <div>
       {!isLoading && <MainHeader user={loadedUser} /> }
@@ -47,7 +58,7 @@ const Videos = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && loadedVideos && <VideoList videos={loadedVideos} />}
+      {!isLoading && loadedVideos && <VideoList videos={loadedVideos} directToUploadVideoPage={directToUploadVideoPageHandler} />}
     </div>
   );
 };

@@ -34,3 +34,13 @@
   background-color: #F9F9F9;
   height: 100vh;
 }
+
+.no-video-found {
+  width: 50rem;
+  height: 10rem;
+  background-color: burlywood;
+  color: white;
+  font-size: 28px;
+  margin: 40px auto;
+  cursor: pointer;
+}
