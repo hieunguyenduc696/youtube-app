@@ -187,6 +187,8 @@
 .main-header-login i {
   margin-right: 10px;
   font-weight: bold;
+  display: flex;
+  font-size: 20px;
 }
 
 .main-header-login span {

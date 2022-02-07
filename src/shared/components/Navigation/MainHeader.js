@@ -110,7 +110,7 @@ const MainHeader = (props) => {
 
           {!authCtx.isLoggedIn && (
             <Link className="main-header-login" to="/auth">
-              <i className="far fa-user"></i>
+              <i className="far fa-user-circle"></i>
               <span>Login</span>
             </Link>
           )}

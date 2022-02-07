@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
+import Comment from "./Comment";
 import VideoList from "../components/Videos/VideoList";
 import MainHeader from "../../shared/components/Navigation/MainHeader";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
@@ -19,6 +20,7 @@ const VideoDetailPage = () => {
   const [loadedUser, setLoadedUser] = useState();
   const [loadedAuthor, setLoadedAuthor] = useState();
   const [likedUser, setLikedUser] = useState(false);
+  const [comments, setComments] = useState();
   const [likes, setLikes] = useState(0);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const drawerCtx = useContext(DrawerContext);
@@ -46,7 +48,7 @@ const VideoDetailPage = () => {
         ) {
           setLikedUser(true);
         } else {
-          setLikedUser(false)
+          setLikedUser(false);
         }
       } catch (err) {}
     };
@@ -97,6 +99,23 @@ const VideoDetailPage = () => {
     };
     fetchAuthor();
   }, [loadedVideo, sendRequest]);
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      try {
+        let responseData;
+        if (loadedVideo) {
+          responseData = await sendRequest(
+            `http://localhost:5000/api/videos/comment/${videoId}`
+          );
+        }
+
+        setComments(responseData.items.comments);
+        console.log(responseData.items.comments);
+      } catch (err) {}
+    };
+    fetchComment();
+  }, [sendRequest, videoId, loadedVideo]);
 
   const toggleLikeHandler = async () => {
     try {
@@ -165,6 +184,10 @@ const VideoDetailPage = () => {
               </div>
               <button className="video-detail-subscribe">SUBSCRIBE</button>
             </div>
+
+            {/* Comment */}
+            {!isLoading && <Comment user={loadedUser} comments={comments} />}
+            
           </div>
           <div className="video-detail-right">
             <VideoList videos={loadedVideos} small="yes" />

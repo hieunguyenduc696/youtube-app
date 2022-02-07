@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -10,17 +10,23 @@ import "./VideoItem.css";
 const VideoItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
+  const mountedRef = useRef(true)
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
           `http://localhost:5000/api/users/${props.author}`
         );
+        if (!mountedRef.current) return null
 
         setLoadedUser(responseData.user);
       } catch (err) {}
     };
     fetchUser();
+
+    return () => { 
+      mountedRef.current = false
+    }
   }, [props.author, sendRequest]);
 
   const videoItemClasses = props.small ? "video-item-small" : "";
