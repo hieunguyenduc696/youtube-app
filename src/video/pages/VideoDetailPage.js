@@ -135,6 +135,10 @@ const VideoDetailPage = () => {
     } catch (err) {}
   };
 
+  const onCommentHandler = (comment) => {
+    setComments(prev => prev ? [comment, ...prev] : [comment])
+  }
+
   return (
     <div className={videoDetailPageClasses}>
       {!isLoading && <MainHeader user={loadedUser} />}
@@ -186,7 +190,7 @@ const VideoDetailPage = () => {
             </div>
 
             {/* Comment */}
-            {!isLoading && <Comment user={loadedUser} comments={comments} />}
+            {!isLoading && <Comment user={loadedUser} comments={comments} commentHandler={onCommentHandler} />}
             
           </div>
           <div className="video-detail-right">
