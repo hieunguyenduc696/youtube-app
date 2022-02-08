@@ -17,7 +17,7 @@ const VideoEdit = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedVideos, setLoadedVideos] = useState();
   const [loadedUser, setLoadedUser] = useState();
-  const [loadedComment, setLoadedComment] = useState();
+  const [loadedComment, setLoadedComment] = useState(0);
 
   const videoEditClasses = drawerCtx.drawerIsOpen
     ? "video-edit-mini"

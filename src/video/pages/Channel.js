@@ -29,18 +29,22 @@ const Channel = () => {
         );
 
         setLoadedUser(responseData.user);
+        console.log(authCtx.userId);
+        console.log(userId);
       } catch (err) {}
     };
     fetchUser();
 
     const fetchMainUser = async () => {
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
-        );
+      if (authCtx.isLoggedIn) {
+        try {
+          const responseData = await sendRequest(
+            `http://localhost:5000/api/users/${authCtx.userId}`
+          );
 
-        setMainUser(responseData.user);
-      } catch (err) {}
+          setMainUser(responseData.user);
+        } catch (err) {}
+      }
     };
     fetchMainUser();
 
