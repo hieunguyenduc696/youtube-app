@@ -11,7 +11,7 @@ const DeleteIcon = (props) => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const authCtx = useContext(AuthContext);
 
-  const showDeleteWarningHandler = (videoId) => {
+  const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
 
@@ -21,15 +21,34 @@ const DeleteIcon = (props) => {
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    try {
-      await sendRequest(
-        `http://localhost:5000/api/videos/${props.videoId}`,
-        "DELETE",
-        null,
-        { Authorization: "Bearer " + authCtx.token }
-      );
-      props.onDelete(props.videoId);
-    } catch (err) {}
+    if (!props.commentId) {
+      try {
+        await sendRequest(
+          `http://localhost:5000/api/videos/${props.videoId}`,
+          "DELETE",
+          null,
+          { Authorization: "Bearer " + authCtx.token }
+        );
+        props.onDelete(props.videoId);
+      } catch (err) {}
+    }
+    // delete comment
+    if (props.commentId) {
+      try {
+        await sendRequest(
+          `http://localhost:5000/api/videos/comment/${props.videoId}`,
+          "DELETE",
+          JSON.stringify({
+            id: props.commentId,
+          }),
+          {
+            Authorization: "Bearer " + authCtx.token,
+            "Content-Type": "application/json",
+          }
+        );
+        props.onDelete(props.commentId);
+      } catch (err) {}
+    }
   };
 
   return (
@@ -61,12 +80,12 @@ const DeleteIcon = (props) => {
         }
       >
         <p>
-          Do you want to proceed and delete this video? Please note that it
+          Do you want to proceed and delete this {props.ident}? Please note that it
           can't be undone thereafter.
         </p>
       </Modal>
       <div className="delete-icon-text" onClick={showDeleteWarningHandler}>
-        Delete video
+        {props.text}
       </div>
     </span>
   );

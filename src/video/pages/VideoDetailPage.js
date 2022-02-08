@@ -106,15 +106,19 @@ const VideoDetailPage = () => {
         let responseData;
         if (loadedVideo) {
           responseData = await sendRequest(
-            `http://localhost:5000/api/videos/comment/${videoId}`
+            `http://localhost:5000/api/videos/comment/${videoId}`,
+            "GET",
+            null,
+            { Authorization: "Bearer " + authCtx.userId }
           );
         }
 
         setComments(responseData.items.comments);
+        console.log(responseData.items.comments)
       } catch (err) {}
     };
     fetchComment();
-  }, [sendRequest, videoId, loadedVideo]);
+  }, [sendRequest, videoId, loadedVideo, authCtx.userId]);
 
   const toggleLikeHandler = async () => {
     try {
@@ -136,6 +140,12 @@ const VideoDetailPage = () => {
 
   const onCommentHandler = (comment) => {
     setComments((prev) => (prev ? [comment, ...prev] : [comment]));
+  };
+
+  const deletedHandler = (deletedcommentId) => {
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment.id !== deletedcommentId)
+    );
   };
 
   return (
@@ -194,6 +204,7 @@ const VideoDetailPage = () => {
                 user={loadedUser}
                 comments={comments}
                 commentHandler={onCommentHandler}
+                onCommentDeleteHandler={deletedHandler}
               />
             )}
           </div>

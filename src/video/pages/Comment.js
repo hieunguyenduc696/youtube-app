@@ -5,6 +5,8 @@ import Input from "../../shared/components/FormElements/Input";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElement/ErrorModal";
 import Button from "../../shared/components/FormElements/Button";
+import EditIcon from "../../shared/icons/EditIcon";
+import DeleteIcon from "../../shared/icons/DeleteIcon";
 import { useForm } from "../../shared/hooks/form-hook";
 import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -17,6 +19,7 @@ const Comment = (props) => {
   const history = useHistory();
   const authCtx = useContext(AuthContext);
   const videoId = useParams().vid;
+
   const [formState, inputHandler] = useForm(
     {
       content: {
@@ -51,8 +54,10 @@ const Comment = (props) => {
     } catch (err) {}
   };
 
-  const cancelCommentHandler = () => {
-    
+  const cancelCommentHandler = () => {};
+
+  const commentDeletedHandler = (deletedcommentId) => {
+    props.onCommentDeleteHandler(deletedcommentId);
   };
 
   const user = props.user;
@@ -76,10 +81,7 @@ const Comment = (props) => {
                 {!user && <i className="far fa-user-circle"></i>}
               </div>
               <div className="comment-container-col">
-                <div
-                  className="comment-container-col__info"
-                  onClick={commentHandler}
-                >
+                <div onClick={commentHandler}>
                   <Input
                     id="content"
                     element="input"
@@ -140,6 +142,19 @@ const Comment = (props) => {
                       <p>{comment.content}</p>
                     </div>
                   </div>
+
+                  {comment.editor === 1 && (
+                    <div className="comment-container-col__info-edit">
+                      <EditIcon text="Edit comment" />
+                      <DeleteIcon
+                        commentId={comment.id}
+                        onDelete={commentDeletedHandler}
+                        videoId={videoId}
+                        text="Delete comment"
+                        ident="comment"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

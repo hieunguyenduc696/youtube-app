@@ -8,9 +8,9 @@
 }
 
 .comment-container-row:nth-child(2) {
-    right: 0;
-    align-items: center;
-    justify-content: end;
+  right: 0;
+  align-items: center;
+  justify-content: end;
 }
 
 .comment-container-row i {
@@ -32,7 +32,19 @@
 }
 
 .comment-container-col__info {
-    font-style: 20px;
+  font-size: 20px;
+  width: 90%;
+  display: inline-block;
+  /* background-color: #6e716e; */
+}
+
+.comment-container-col__info-edit {
+  width: 10%;
+  display: inline-block;
+}
+
+.comment-container-col__info-edit span {
+  margin-right: 14px;
 }
 
 .comment-container-col__info input {
@@ -48,7 +60,7 @@
 .comment-container-col__name {
   margin-right: 10px;
   font-size: 14px;
-} 
+}
 
 .comment-container-col__time {
   font-size: 11px;
@@ -58,7 +70,6 @@
 .comment-container-col__content {
   font-size: 14px;
 }
-
 
 .comment-container__actions {
   float: right;

@@ -81,9 +81,7 @@ const VideoEdit = () => {
       {!isLoading && loadedUser && <MainHeader user={loadedUser} />}
       <ErrorModal error={error} onClear={clearError} />
       {!isLoading && (!loadedVideos || loadedVideos.length === 0) && (
-        <div className={`no-video-found-1`}>
-          No video found.
-        </div>
+        <div className={`no-video-found-1`}>No video found.</div>
       )}
       {!isLoading && loadedVideos && loadedComment && (
         <div className={videoEditClasses}>
@@ -108,11 +106,16 @@ const VideoEdit = () => {
                     <span>{video.description}</span>
                   </div>
                   <div className="video-edit-tools">
-                    <EditIcon videoId={video.id} />
+                    <EditIcon
+                      videoId={video.id}
+                      text="Edit title & description"
+                    />
                     <YoutubeIcon videoId={video.id} />
                     <DeleteIcon
                       videoId={video.id}
                       onDelete={videoDeletedHandler}
+                      text="Delete video"
+                      ident="video"
                     />
                   </div>
                 </div>
