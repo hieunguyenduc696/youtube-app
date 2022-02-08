@@ -114,7 +114,7 @@ const VideoDetailPage = () => {
         }
 
         setComments(responseData.items.comments);
-        console.log(responseData.items.comments)
+        console.log(responseData.items.comments);
       } catch (err) {}
     };
     fetchComment();
@@ -139,13 +139,22 @@ const VideoDetailPage = () => {
   };
 
   const onCommentHandler = (comment) => {
-    setComments((prev) => (prev ? [comment, ...prev] : [comment]));
+    let _comment = comment
+    _comment.editor = 1
+    setComments((prev) => (prev ? [_comment, ...prev] : [comment]));
   };
 
   const deletedHandler = (deletedcommentId) => {
     setComments((prevComments) =>
       prevComments.filter((comment) => comment.id !== deletedcommentId)
     );
+  };
+
+  const editHandler = (editCommentId, content) => {
+    let index = comments.findIndex((item) => item.id === editCommentId);
+    let _comments = [...comments]
+    _comments[index].content = content
+    setComments(_comments);
   };
 
   return (
@@ -205,6 +214,7 @@ const VideoDetailPage = () => {
                 comments={comments}
                 commentHandler={onCommentHandler}
                 onCommentDeleteHandler={deletedHandler}
+                onCommentEditHandler={editHandler}
               />
             )}
           </div>

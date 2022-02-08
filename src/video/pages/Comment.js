@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -16,9 +16,17 @@ import "./Comment.css";
 
 const Comment = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [isEditting, setIsEditting] = useState(false);
+  const [isCommentting, setIsCommentting] = useState(false);
+  const [loadedComment, setLoadedComment] = useState();
+  const [_comment, setComment] = useState();
+  const [idx, setIdx] = useState(0);
   const history = useHistory();
   const authCtx = useContext(AuthContext);
   const videoId = useParams().vid;
+
+  const user = props.user;
+  const comments = props.comments;
 
   const [formState, inputHandler] = useForm(
     {
@@ -34,6 +42,8 @@ const Comment = (props) => {
     if (!authCtx.isLoggedIn) {
       history.push("/auth");
     }
+    setIsCommentting(true);
+    setIsEditting(false);
   };
 
   const commentSubmitHandler = async (event) => {
@@ -51,17 +61,61 @@ const Comment = (props) => {
         }
       );
       props.commentHandler(responseData.items);
+      setIsEditting(false);
+      console.log(responseData.items)
     } catch (err) {}
   };
 
-  const cancelCommentHandler = () => {};
+  const cancelCommentHandler = () => {
+    setIsCommentting(false);
+  };
+
+  const editClickHandler = async (commentId) => {
+    setIsEditting(true);
+    setIdx(commentId);
+
+    try {
+      const responseData = await sendRequest(
+        `http://localhost:5000/api/videos/comment/${videoId}/${commentId}`
+      );
+      setLoadedComment(responseData.items);
+      setComment(responseData.items.content);
+    } catch (err) {}
+  };
+
+  const cancelEditHandler = () => {
+    setIsEditting(false);
+    setIdx(null);
+  };
 
   const commentDeletedHandler = (deletedcommentId) => {
     props.onCommentDeleteHandler(deletedcommentId);
   };
 
-  const user = props.user;
-  const comments = props.comments;
+  const inputCommentChangeHandler = (event) => {
+    setComment(event.target.value);
+  };
+
+  const saveCommentHandler = async (commentId) => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/videos/comment/${videoId}`,
+        "PATCH",
+        JSON.stringify({
+          id: commentId,
+          content: _comment,
+        }),
+        {
+          Authorization: "Bearer " + authCtx.token,
+          "Content-Type": "application/json",
+        }
+      );
+      setIsEditting(false);
+      setIdx(null);
+      props.onCommentEditHandler(commentId, _comment);
+    } catch (err) {}
+  };
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -70,7 +124,10 @@ const Comment = (props) => {
         <div className="comment-container">
           <form onSubmit={commentSubmitHandler}>
             <div className="comment-container-row">
-              <div className="comment-container-col">
+              <div
+                className="comment-container-col"
+                style={{ marginBottom: "0px" }}
+              >
                 {user && (
                   <img
                     src={`http://localhost:5000/${user.image}`}
@@ -80,7 +137,10 @@ const Comment = (props) => {
                 )}
                 {!user && <i className="far fa-user-circle"></i>}
               </div>
-              <div className="comment-container-col">
+              <div
+                className="comment-container-col"
+                style={{ marginBottom: "0px" }}
+              >
                 <div onClick={commentHandler}>
                   <Input
                     id="content"
@@ -88,75 +148,116 @@ const Comment = (props) => {
                     placeholder="Add a public comment..."
                     onInput={inputHandler}
                     validators={[VALIDATOR_REQUIRE()]}
-                    label=""
                   />
                 </div>
               </div>
             </div>
-            <div className="comment-container-row">
-              <div className="comment-container__actions">
-                <button
-                  className="comment-container__actions-cancel"
-                  type="button"
-                  onClick={cancelCommentHandler}
-                >
-                  CANCEL
-                </button>
-                <Button
-                  type="submit"
-                  disabled={!formState.isValid}
-                  style={{ background: "#065FD4", border: "none" }}
-                >
-                  COMMENT
-                </Button>
+            {isCommentting && (
+              <div className="comment-container-row" style={{ marginTop: "0" }}>
+                <div className="comment-container__actions">
+                  <button
+                    className="comment-container__actions-cancel"
+                    type="button"
+                    onClick={cancelCommentHandler}
+                  >
+                    CANCEL
+                  </button>
+
+                  <Button
+                    type="submit"
+                    disabled={!formState.isValid}
+                    style={{ background: "#065FD4", border: "none" }}
+                  >
+                    COMMENT
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </form>
 
           {!isLoading &&
             comments &&
-            comments.map((comment) => (
-              <div
-                className="comment-container-row"
-                key={comment.id}
-                style={{ marginBottom: "30px" }}
-              >
-                <div className="comment-container-col">
-                  <img
-                    src={`http://localhost:5000/${comment.image}`}
-                    alt="avt"
-                    className="comment-container-col__image"
-                  />
-                </div>
-                <div className="comment-container-col">
-                  <div className="comment-container-col__info">
-                    <div className="comment-container-col__name-time">
-                      <h3 className="comment-container-col__name">
-                        {comment.name}
-                      </h3>
-                      <span className="comment-container-col__time">
-                        {comment.date}
-                      </span>
-                    </div>
-                    <div className="comment-container-col__content">
-                      <p>{comment.content}</p>
-                    </div>
+            comments.map((comment, index) => (
+              <React.Fragment key={comment.id}>
+                <div className="comment-container-row">
+                  <div className="comment-container-col">
+                    <img
+                      src={`http://localhost:5000/${comment.image}`}
+                      alt="avt"
+                      className="comment-container-col__image"
+                    />
                   </div>
+                  {isEditting && comment.id === idx && (
+                    <div className="comment-container-col">
+                      {loadedComment && _comment && (
+                        <input
+                          className="comment-container-col__input"
+                          value={_comment}
+                          onChange={inputCommentChangeHandler}
+                        />
+                      )}
+                    </div>
+                  )}
+                  {(!isEditting || comment.id !== idx) && (
+                    <div className="comment-container-col">
+                      <div className="comment-container-col__info">
+                        <div className="comment-container-col__name-time">
+                          <h3 className="comment-container-col__name">
+                            {comment.name}
+                          </h3>
+                          <span className="comment-container-col__time">
+                            {comment.date}
+                          </span>
+                        </div>
+                        <div className="comment-container-col__content">
+                          <p>{comment.content}</p>
+                        </div>
+                      </div>
 
-                  {comment.editor === 1 && (
-                    <div className="comment-container-col__info-edit">
-                      <EditIcon text="Edit comment" />
-                      <DeleteIcon
-                        commentId={comment.id}
-                        onDelete={commentDeletedHandler}
-                        videoId={videoId}
-                        text="Delete comment"
-                        ident="comment"
-                      />
+                      {comment.editor === 1 && (
+                        <div className="comment-container-col__info-edit">
+                          <EditIcon
+                            text="Edit comment"
+                            videoId={videoId}
+                            commentId={comment.id}
+                            onClick={editClickHandler}
+                            isEditting={isEditting}
+                          />
+                          <DeleteIcon
+                            commentId={comment.id}
+                            onDelete={commentDeletedHandler}
+                            videoId={videoId}
+                            text="Delete comment"
+                            ident="comment"
+                          />
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              </div>
+                {isEditting && comment.id === idx && (
+                  <div
+                    className="comment-container-row comment-container-row-1"
+                    style={{ marginTop: "0" }}
+                  >
+                    <button
+                      className="comment-container__actions-cancel"
+                      type="button"
+                      onClick={cancelEditHandler}
+                    >
+                      CANCEL
+                    </button>
+                    <Button
+                      type="submit"
+                      style={{ background: "#065FD4", border: "none" }}
+                      onClick={saveCommentHandler}
+                      commentId={comment.id}
+                    >
+                      SAVE
+                    </Button>
+                  </div>
+                )}
+              </React.Fragment>
             ))}
         </div>
       )}
