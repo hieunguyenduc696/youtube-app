@@ -1,22 +1,35 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom";
-import Videos from "./video/pages/Videos";
-import NewVideo from "./video/pages/NewVideo";
-import VideoDetailPage from "./video/pages/VideoDetailPage";
-import UpdateVideo from "./video/pages/UpdateVideo";
-import Channel from "./video/pages/Channel";
-import About from "./video/pages/About";
-import VideoEdit from "./video/pages/VideoEdit";
-import Auth from "./user/pages/Auth";
+
+// import Videos from "./video/pages/Videos";
+// import NewVideo from "./video/pages/NewVideo";
+// import VideoDetailPage from "./video/pages/VideoDetailPage";
+// import UpdateVideo from "./video/pages/UpdateVideo";
+// import Channel from "./video/pages/Channel";
+// import About from "./video/pages/About";
+// import VideoEdit from "./video/pages/VideoEdit";
+// import Auth from "./user/pages/Auth";
 
 import { DrawerContext } from "./shared/contexts/sidebar-context";
 import { AuthContext } from "./shared/contexts/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import LoadingSpinner from "./shared/components/UIElement/LoadingSpinner";
+
+const Videos = React.lazy(() => import('./video/pages/Videos'))
+const NewVideo = React.lazy(() => import("./video/pages/NewVideo"));
+const UpdateVideo = React.lazy(() => import("./video/pages/UpdateVideo"));
+const VideoDetailPage = React.lazy(() =>
+  import("./video/pages/VideoDetailPage")
+);
+const Channel = React.lazy(() => import("./video/pages/Channel"));
+const About = React.lazy(() => import("./video/pages/About"));
+const VideoEdit = React.lazy(() => import("./video/pages/VideoEdit"));
+const Auth = React.lazy(() => import("./user/pages/Auth"));
 
 function App() {
   const [drawerIsOpen, setDrawerIsOpen] = useState();
@@ -98,7 +111,17 @@ function App() {
           closeDrawer: closeDrawer,
         }}
       >
-        <Router>{routes}</Router>
+        <Router>
+          <Suspense
+            fallback={
+              <div className="center">
+                <LoadingSpinner />
+              </div>
+            }
+          >
+            {routes}
+          </Suspense>
+        </Router>
       </DrawerContext.Provider>
     </AuthContext.Provider>
   );
