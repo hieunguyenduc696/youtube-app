@@ -37,7 +37,7 @@ const VideoDetailPage = () => {
     const fetchVideo = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/videos/${videoId}`
+          `${process.env.REACT_APP_BACKEND_URL}/videos/${videoId}`
         );
         setLoadedVideo(responseData.video);
         console.log(responseData.video);
@@ -60,7 +60,7 @@ const VideoDetailPage = () => {
     const fetchVideos = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/videos"
+          process.env.REACT_APP_BACKEND_URL + "/videos"
         );
 
         setLoadedVideos(responseData.videos);
@@ -73,7 +73,7 @@ const VideoDetailPage = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
         );
 
         setLoadedUser(responseData.user);
@@ -91,7 +91,7 @@ const VideoDetailPage = () => {
         let responseData;
         if (loadedVideo) {
           responseData = await sendRequest(
-            `http://localhost:5000/api/users/${loadedVideo.author}`
+            `${process.env.REACT_APP_BACKEND_URL}/users/${loadedVideo.author}`
           );
         }
 
@@ -114,7 +114,7 @@ const VideoDetailPage = () => {
         let responseData;
         if (loadedVideo) {
           responseData = await sendRequest(
-            `http://localhost:5000/api/videos/comment/${videoId}`,
+            `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${videoId}`,
             "GET",
             null,
             { Authorization: "Bearer " + authCtx.userId }
@@ -130,7 +130,7 @@ const VideoDetailPage = () => {
   const toggleLikeHandler = async () => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/videos/togglelike/${videoId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/videos/togglelike/${videoId}`,
         "POST",
         null,
         { Authorization: "Bearer " + authCtx.token }
@@ -169,7 +169,7 @@ const VideoDetailPage = () => {
     setSubscribeClasses((prev) => !prev);
     try {
       await sendRequest(
-        "http://localhost:5000/api/users/subscribe",
+        process.env.REACT_APP_BACKEND_URL + "/users/subscribe",
         "POST",
         JSON.stringify({
           id: loadedAuthor.id,
@@ -201,7 +201,7 @@ const VideoDetailPage = () => {
                 height={
                   videoDetailPageClasses === "video-detail-page" ? "530" : "500"
                 }
-                src={`http://localhost:5000/${loadedVideo.video}`}
+                src={`${process.env.REACT_APP_ASSET_URL}/${loadedVideo.video}`}
               ></video>
             </div>
 
@@ -223,7 +223,7 @@ const VideoDetailPage = () => {
             <div className="video-detail-user">
               <Link to={`/channel/${loadedVideo.author}`}>
                 <img
-                  src={`http://localhost:5000/${loadedVideo.image}`}
+                  src={`${process.env.REACT_APP_ASSET_URL}/${loadedVideo.image}`}
                   alt={loadedVideo.title}
                   className="video-detail-user-image"
                 />

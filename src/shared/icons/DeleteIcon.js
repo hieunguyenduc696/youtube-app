@@ -24,7 +24,7 @@ const DeleteIcon = (props) => {
     if (!props.commentId) {
       try {
         await sendRequest(
-          `http://localhost:5000/api/videos/${props.videoId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/videos/${props.videoId}`,
           "DELETE",
           null,
           { Authorization: "Bearer " + authCtx.token }
@@ -36,7 +36,7 @@ const DeleteIcon = (props) => {
     if (props.commentId) {
       try {
         await sendRequest(
-          `http://localhost:5000/api/videos/comment/${props.videoId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${props.videoId}`,
           "DELETE",
           JSON.stringify({
             id: props.commentId,
@@ -80,8 +80,8 @@ const DeleteIcon = (props) => {
         }
       >
         <p>
-          Do you want to proceed and delete this {props.ident}? Please note that it
-          can't be undone thereafter.
+          Do you want to proceed and delete this {props.ident}? Please note that
+          it can't be undone thereafter.
         </p>
       </Modal>
       <div className="delete-icon-text" onClick={showDeleteWarningHandler}>

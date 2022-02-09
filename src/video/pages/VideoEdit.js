@@ -27,7 +27,7 @@ const VideoEdit = () => {
       let responseData;
       try {
         responseData = await sendRequest(
-          `http://localhost:5000/api/videos/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/videos/user/${userId}`
         );
         setLoadedVideos(responseData.videos);
         console.log(responseData.videos);
@@ -37,7 +37,7 @@ const VideoEdit = () => {
         responseData.videos.forEach(async (video) => {
           try {
             const responseData1 = await sendRequest(
-              `http://localhost:5000/api/videos/comment/${video.id}`
+              `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${video.id}`
             );
             setLoadedComment((prev) =>
               prev
@@ -53,7 +53,7 @@ const VideoEdit = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
 
         setLoadedUser(responseData.user);
@@ -98,7 +98,7 @@ const VideoEdit = () => {
               <div className="row" key={video.id}>
                 <div className="col video">
                   <img
-                    src={`http://localhost:5000/${video.image}`}
+                    src={`${process.env.REACT_APP_ASSET_URL}/${video.image}`}
                     alt={video.title}
                   />
                   <div className="video-edit-info">

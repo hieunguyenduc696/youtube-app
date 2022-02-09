@@ -18,7 +18,7 @@ const Videos = () => {
     const fetchVideos = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/videos"
+          process.env.REACT_APP_BACKEND_URL + "/videos"
         );
         setLoadedVideos(responseData.videos);
       } catch (err) {}
@@ -27,7 +27,7 @@ const Videos = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
         );
 
         setLoadedUser(responseData.user);

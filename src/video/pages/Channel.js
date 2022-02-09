@@ -27,7 +27,7 @@ const Channel = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
 
         setLoadedUser(responseData.user);
@@ -47,7 +47,7 @@ const Channel = () => {
       if (authCtx.isLoggedIn) {
         try {
           const responseData = await sendRequest(
-            `http://localhost:5000/api/users/${authCtx.userId}`
+            `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
           );
 
           setMainUser(responseData.user);
@@ -59,7 +59,7 @@ const Channel = () => {
     const fetchVideos = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/videos/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/videos/user/${userId}`
         );
         setLoadedVideos(responseData.videos);
       } catch (err) {}
@@ -91,7 +91,7 @@ const Channel = () => {
     setSubscribed((prev) => !prev);
     try {
       await sendRequest(
-        "http://localhost:5000/api/users/subscribe",
+        process.env.REACT_APP_BACKEND_URL + "/users/subscribe",
         "POST",
         JSON.stringify({
           id: userId,
@@ -122,7 +122,7 @@ const Channel = () => {
               <div className="channel-top-user-info">
                 <img
                   className="channel-top-user__image"
-                  src={`http://localhost:5000/${loadedUser.image}`}
+                  src={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`}
                   alt={loadedUser.name}
                 />
                 <div className="channel-top-user__name">

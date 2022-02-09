@@ -15,7 +15,7 @@ const VideoItem = (props) => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${props.author}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${props.author}`
         );
         if (!mountedRef.current) return null;
 
@@ -52,7 +52,7 @@ const VideoItem = (props) => {
             <div className={top}>
               <Link to={`/${props.id}`}>
                 <img
-                  src={`http://localhost:5000/${props.image}`}
+                  src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
                   alt={props.title}
                   className={thumbnails}
                 />
@@ -62,7 +62,7 @@ const VideoItem = (props) => {
               <div className={usertitleClasses}>
                 <Link to={`/channel/${props.author}`}>
                   <img
-                    src={`http://localhost:5000/${loadedUser.image}`}
+                    src={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`}
                     alt={props.title}
                     className={avatarClasses}
                   />

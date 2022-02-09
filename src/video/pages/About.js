@@ -12,7 +12,7 @@ import "./Channel.css";
 
 const About = () => {
   const drawerCtx = useContext(DrawerContext);
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
   const userId = useParams().uid;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
@@ -22,7 +22,7 @@ const About = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
         );
 
         setLoadedUser(responseData.user);
@@ -31,13 +31,15 @@ const About = () => {
     fetchUser();
 
     const fetchMainUser = async () => {
-      try {
-        const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
-        );
+      if (authCtx.isLoggedIn) {
+        try {
+          const responseData = await sendRequest(
+            `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
+          );
 
-        setMainUser(responseData.user);
-      } catch (err) {}
+          setMainUser(responseData.user);
+        } catch (err) {}
+      }
     };
     fetchMainUser();
   }, [userId, sendRequest, authCtx.userId]);
@@ -63,7 +65,7 @@ const About = () => {
               <div className="channel-top-user-info">
                 <img
                   className="channel-top-user__image"
-                  src={`http://localhost:5000/${loadedUser.image}`}
+                  src={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`}
                   alt={loadedUser.name}
                 />
                 <div className="channel-top-user__name">

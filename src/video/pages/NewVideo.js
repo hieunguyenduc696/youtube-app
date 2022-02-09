@@ -13,7 +13,7 @@ import "./NewVideo.css";
 const NewVideo = () => {
   const authCtx = useContext(AuthContext);
   const drawerCtx = useContext(DrawerContext);
-  const [loadedUser, setLoadedUser] = useState()
+  const [loadedUser, setLoadedUser] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const formWrapperClasses = drawerCtx.drawerIsOpen
     ? "form-wrapper-mini"
@@ -23,7 +23,7 @@ const NewVideo = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
         );
 
         setLoadedUser(responseData.user);

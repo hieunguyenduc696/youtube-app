@@ -47,7 +47,7 @@ const UpdateVideo = () => {
     const fetchVideo = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/videos/${videoId}`
+          `${process.env.REACT_APP_BACKEND_URL}/videos/${videoId}`
         );
 
         setLoadedVideo(responseData.video);
@@ -71,7 +71,7 @@ const UpdateVideo = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/users/${authCtx.userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${authCtx.userId}`
         );
 
         setLoadedUser(responseData.user);
@@ -94,7 +94,7 @@ const UpdateVideo = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/videos/${videoId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/videos/${videoId}`,
         "PATCH",
         JSON.stringify({
           title: formState.inputs.title.value,

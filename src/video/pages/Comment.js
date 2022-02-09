@@ -50,7 +50,7 @@ const Comment = (props) => {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        `http://localhost:5000/api/videos/comment/${videoId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${videoId}`,
         "POST",
         JSON.stringify({
           content: formState.inputs.content.value,
@@ -76,7 +76,7 @@ const Comment = (props) => {
 
     try {
       const responseData = await sendRequest(
-        `http://localhost:5000/api/videos/comment/${videoId}/${commentId}`
+        `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${videoId}/${commentId}`
       );
       setLoadedComment(responseData.items);
       setComment(responseData.items.content);
@@ -99,7 +99,7 @@ const Comment = (props) => {
   const saveCommentHandler = async (commentId) => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/videos/comment/${videoId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/videos/comment/${videoId}`,
         "PATCH",
         JSON.stringify({
           id: commentId,
@@ -131,7 +131,7 @@ const Comment = (props) => {
                 {user && (
                   <Link to={`/channel/${user.id}`}>
                     <img
-                      src={`http://localhost:5000/${user.image}`}
+                      src={`${process.env.REACT_APP_ASSET_URL}/${user.image}`}
                       alt={user.name}
                       className="comment-container-col__image"
                     />
@@ -185,7 +185,7 @@ const Comment = (props) => {
                   <div className="comment-container-col">
                     <Link to={`/channel/${comment.user_id}`}>
                       <img
-                        src={`http://localhost:5000/${comment.image}`}
+                        src={`${process.env.REACT_APP_ASSET_URL}/${comment.image}`}
                         alt="avt"
                         className="comment-container-col__image"
                       />

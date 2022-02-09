@@ -46,7 +46,9 @@ const MainHeader = (props) => {
     <React.Fragment>
       <div className={mainHeaderClasses}>
         {drawerCtx.drawerIsOpen && <Sidebar path={history.location.pathname} />}
-        {!drawerCtx.drawerIsOpen && <MiniSidebar path={history.location.pathname} />}
+        {!drawerCtx.drawerIsOpen && (
+          <MiniSidebar path={history.location.pathname} />
+        )}
         <div className="main-header-left">
           <button
             className="main-header-hamburger"
@@ -89,13 +91,13 @@ const MainHeader = (props) => {
               {submenuIsOpen && <Backdrop onClick={toggleSubmenuHandler} />}
             </div>
           )}
-          {authCtx.isLoggedIn &&  (
+          {authCtx.isLoggedIn && (
             <div className="main-header-avatar">
               <img
                 className="main-header-avatar__image"
                 src={
                   props.user
-                    ? `http://localhost:5000/${props.user.image}`
+                    ? `${process.env.REACT_APP_ASSET_URL}/${props.user.image}`
                     : "https://i.pinimg.com/236x/e9/71/69/e971694c70e8f181f94f0be7a4a60529.jpg"
                 }
                 alt="user-avatar"
