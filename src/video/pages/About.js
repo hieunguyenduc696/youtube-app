@@ -42,7 +42,7 @@ const About = () => {
       }
     };
     fetchMainUser();
-  }, [userId, sendRequest, authCtx.userId]);
+  }, [userId, sendRequest, authCtx.userId, authCtx.isLoggedIn]);
 
   if (isLoading) {
     return (
