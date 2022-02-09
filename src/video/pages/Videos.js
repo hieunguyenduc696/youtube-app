@@ -11,7 +11,7 @@ import { AuthContext } from "../../shared/contexts/auth-context";
 const Videos = () => {
   const [loadedVideos, setLoadedVideos] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const authCtx = useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
   const [loadedUser, setLoadedUser] = useState();
 
   useEffect(() => {
@@ -39,9 +39,9 @@ const Videos = () => {
     fetchUser();
   }, [sendRequest, authCtx.isLoggedIn, authCtx.userId]);
 
-  const history = useHistory()
+  const history = useHistory();
   const directToUploadVideoPageHandler = () => {
-    console.log('ehehehhe')
+    console.log("ehehehhe");
     if (authCtx.isLoggedIn) {
       history.push("/videos/new");
     } else {
@@ -51,14 +51,19 @@ const Videos = () => {
 
   return (
     <div>
-      {!isLoading && <MainHeader user={loadedUser} /> }
+      {!isLoading && <MainHeader user={loadedUser} />}
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
-      {!isLoading && loadedVideos && <VideoList videos={loadedVideos} directToUploadVideoPage={directToUploadVideoPageHandler} />}
+      {!isLoading && loadedVideos && (
+        <VideoList
+          videos={loadedVideos}
+          directToUploadVideoPage={directToUploadVideoPageHandler}
+        />
+      )}
     </div>
   );
 };

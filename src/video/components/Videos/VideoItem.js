@@ -10,23 +10,23 @@ import "./VideoItem.css";
 const VideoItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUser, setLoadedUser] = useState();
-  const mountedRef = useRef(true)
+  const mountedRef = useRef(true);
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(
           `http://localhost:5000/api/users/${props.author}`
         );
-        if (!mountedRef.current) return null
+        if (!mountedRef.current) return null;
 
         setLoadedUser(responseData.user);
       } catch (err) {}
     };
     fetchUser();
 
-    return () => { 
-      mountedRef.current = false
-    }
+    return () => {
+      mountedRef.current = false;
+    };
   }, [props.author, sendRequest]);
 
   const videoItemClasses = props.small ? "video-item-small" : "";
@@ -76,7 +76,9 @@ const VideoItem = (props) => {
               <Link to={`/${props.id}`}>
                 <div className={infoClasses}>
                   <span className="video-item-author">{loadedUser.name}</span>
-                  <span className="video-item-views">{props.views}M views</span>
+                  <span className="video-item-views">
+                    {props.views} {props.views !== 1 ? "views" : "view"}
+                  </span>
                   <span className="video-item-createdAt">
                     {props.createdAt}
                   </span>

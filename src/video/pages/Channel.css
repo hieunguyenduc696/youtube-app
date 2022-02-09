@@ -42,6 +42,12 @@
   font-weight: 400;
 }
 
+.channel-top-user__subscribes {
+  text-align: left;
+  color: #606060;
+  font-size: 16px;
+}
+
 .channel-top-user__actions {
   color: white;
   font-size: 14px;

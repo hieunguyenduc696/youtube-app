@@ -40,8 +40,8 @@ const VideoDetailPage = () => {
           `http://localhost:5000/api/videos/${videoId}`
         );
         setLoadedVideo(responseData.video);
+        console.log(responseData.video);
         setLikes(responseData.video.likes.length);
-
         if (
           responseData.video.likes.findIndex(
             (item) => item.user_id === authCtx.userId
@@ -96,10 +96,17 @@ const VideoDetailPage = () => {
         }
 
         setLoadedAuthor(responseData.user);
+        if (
+          responseData.user.subscribes.find(
+            (item) => item.user_id === authCtx.userId
+          )
+        ) {
+          setSubscribeClasses(true);
+        }
       } catch (err) {}
     };
     fetchAuthor();
-  }, [loadedVideo, sendRequest]);
+  }, [loadedVideo, sendRequest, authCtx.userId]);
 
   useEffect(() => {
     const fetchComment = async () => {
@@ -115,7 +122,6 @@ const VideoDetailPage = () => {
         }
 
         setComments(responseData.items.comments);
-        console.log(responseData.items.comments);
       } catch (err) {}
     };
     fetchComment();
@@ -187,6 +193,7 @@ const VideoDetailPage = () => {
           <div className="video-detail-left">
             <div className="video-detail-left-video">
               <video
+                autoPlay
                 controls
                 width={
                   videoDetailPageClasses === "video-detail-page" ? "870" : "600"
@@ -200,7 +207,9 @@ const VideoDetailPage = () => {
 
             <h2 className="video-detail-title">{loadedVideo.title}</h2>
             <div className="video-detail-views-date">
-              <h3 className="video-detail-views">{loadedVideo.views}M views</h3>
+              <h3 className="video-detail-views">
+                {loadedVideo.views} {loadedVideo.views !== 1 ? "views" : "view"}
+              </h3>
               <h3 className="video-detail-date">{loadedVideo.date}</h3>
               <div className="video-detail-like-btn">
                 {likedUser ? (
@@ -225,7 +234,11 @@ const VideoDetailPage = () => {
               </div>
               {loadedAuthor.id !== authCtx.userId && (
                 <button
-                  className={subscribeClasses ? 'video-detail-subscribed' : 'video-detail-subscribe'}
+                  className={
+                    subscribeClasses
+                      ? "video-detail-subscribed"
+                      : "video-detail-subscribe"
+                  }
                   onClick={toggleSubscribeHandler}
                 >
                   SUBSCRIBE

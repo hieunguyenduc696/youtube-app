@@ -19,6 +19,8 @@ const Channel = () => {
   const [loadedUser, setLoadedUser] = useState();
   const [mainUser, setMainUser] = useState();
   const [loadedVideos, setLoadedVideos] = useState();
+  const [subscribeNum, setSubscribeNum] = useState(0);
+  const [subscribed, setSubscribed] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -29,8 +31,14 @@ const Channel = () => {
         );
 
         setLoadedUser(responseData.user);
-        console.log(authCtx.userId);
-        console.log(userId);
+        if (
+          responseData.user.subscribes.find(
+            (item) => item.user_id === authCtx.userId
+          )
+        ) {
+          setSubscribed(true);
+        }
+        setSubscribeNum(responseData.user.subscribes.length);
       } catch (err) {}
     };
     fetchUser();
@@ -57,7 +65,7 @@ const Channel = () => {
       } catch (err) {}
     };
     fetchVideos();
-  }, [authCtx.userId, userId, sendRequest]);
+  }, [authCtx.userId, userId, sendRequest, authCtx.isLoggedIn]);
 
   if (isLoading) {
     return (
@@ -79,6 +87,28 @@ const Channel = () => {
     text = "No video found. Upload video?";
   }
 
+  const toggleSubscribeHandler = async () => {
+    setSubscribed((prev) => !prev);
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/users/subscribe",
+        "POST",
+        JSON.stringify({
+          id: userId,
+        }),
+        {
+          Authorization: "Bearer " + authCtx.token,
+          "Content-Type": "application/json",
+        }
+      );
+      if (subscribed) {
+        setSubscribeNum((prev) => (prev = prev - 1));
+      } else {
+        setSubscribeNum((prev) => (prev = prev + 1));
+      }
+    } catch (err) {}
+  };
+
   const channelClasses = drawerCtx.drawerIsOpen ? "channel-mini" : "channel";
   return (
     <React.Fragment>
@@ -97,6 +127,14 @@ const Channel = () => {
                 />
                 <div className="channel-top-user__name">
                   <span>{loadedUser.name}</span>
+                  <div className="channel-top-user__subscribes">
+                    <span>
+                      {subscribeNum}{" "}
+                      {loadedUser.subscribes.length > 1
+                        ? "subscribes"
+                        : "subscribe"}
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className="channel-top-user__actions">
@@ -113,7 +151,14 @@ const Channel = () => {
                 )}
                 {authCtx.isLoggedIn && authCtx.userId !== userId && (
                   <button
-                    style={{ backgroundColor: "#CC0000", border: "none" }}
+                    type="button"
+                    style={{
+                      backgroundColor: subscribed ? "#ECECEC" : "#CC0000",
+                      border: "none",
+                      color: subscribed ? "#606060" : "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={toggleSubscribeHandler}
                   >
                     SUBSCRIBE
                   </button>

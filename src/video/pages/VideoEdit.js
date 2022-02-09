@@ -120,7 +120,7 @@ const VideoEdit = () => {
                   </div>
                 </div>
                 <div className="col date">{video.date}</div>
-                <div className="col views">200</div>
+                <div className="col views">{video.views}</div>
                 <div className="col comments">{loadedComment[index]}</div>
                 <div className="col likes">{video.likes.length}</div>
               </div>
