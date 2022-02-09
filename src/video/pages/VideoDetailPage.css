@@ -96,7 +96,9 @@
   font-size: 14px;
 }
 
-.video-detail-subscribe {
+.video-detail-subscribe,
+.video-detail-subscribed,
+.video-detail-edit-video {
   margin-top: 20px;
   background-color: #cc0000;
   padding: 1.5rem;
@@ -106,6 +108,23 @@
   font-weight: bold;
   cursor: pointer;
   margin-left: auto;
+}
+
+.video-detail-subscribed {
+  background-color: #ECECEC;
+  color: #606060;
+}
+
+.video-detail-edit-video {
+  background-color: #065FD4;
+}
+
+.video-detail-edit-video button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .video-detail-right {

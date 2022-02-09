@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
 import LoadingSpinner from "../../shared/components/UIElement/LoadingSpinner";
@@ -62,7 +62,7 @@ const Comment = (props) => {
       );
       props.commentHandler(responseData.items);
       setIsEditting(false);
-      console.log(responseData.items)
+      console.log(responseData.items);
     } catch (err) {}
   };
 
@@ -129,11 +129,13 @@ const Comment = (props) => {
                 style={{ marginBottom: "0px" }}
               >
                 {user && (
-                  <img
-                    src={`http://localhost:5000/${user.image}`}
-                    alt={user.name}
-                    className="comment-container-col__image"
-                  />
+                  <Link to={`/channel/${user.id}`}>
+                    <img
+                      src={`http://localhost:5000/${user.image}`}
+                      alt={user.name}
+                      className="comment-container-col__image"
+                    />
+                  </Link>
                 )}
                 {!user && <i className="far fa-user-circle"></i>}
               </div>
@@ -181,11 +183,13 @@ const Comment = (props) => {
               <React.Fragment key={comment.id}>
                 <div className="comment-container-row">
                   <div className="comment-container-col">
-                    <img
-                      src={`http://localhost:5000/${comment.image}`}
-                      alt="avt"
-                      className="comment-container-col__image"
-                    />
+                    <Link to={`/channel/${comment.user_id}`}>
+                      <img
+                        src={`http://localhost:5000/${comment.image}`}
+                        alt="avt"
+                        className="comment-container-col__image"
+                      />
+                    </Link>
                   </div>
                   {isEditting && comment.id === idx && (
                     <div className="comment-container-col">

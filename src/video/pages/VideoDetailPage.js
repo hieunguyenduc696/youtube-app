@@ -21,6 +21,7 @@ const VideoDetailPage = () => {
   const [loadedAuthor, setLoadedAuthor] = useState();
   const [likedUser, setLikedUser] = useState(false);
   const [comments, setComments] = useState();
+  const [subscribeClasses, setSubscribeClasses] = useState(false);
   const [likes, setLikes] = useState(0);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const drawerCtx = useContext(DrawerContext);
@@ -139,8 +140,8 @@ const VideoDetailPage = () => {
   };
 
   const onCommentHandler = (comment) => {
-    let _comment = comment
-    _comment.editor = 1
+    let _comment = comment;
+    _comment.editor = 1;
     setComments((prev) => (prev ? [_comment, ...prev] : [comment]));
   };
 
@@ -152,9 +153,27 @@ const VideoDetailPage = () => {
 
   const editHandler = (editCommentId, content) => {
     let index = comments.findIndex((item) => item.id === editCommentId);
-    let _comments = [...comments]
-    _comments[index].content = content
+    let _comments = [...comments];
+    _comments[index].content = content;
     setComments(_comments);
+  };
+
+  //'video-detail-subscribe'
+  const toggleSubscribeHandler = async () => {
+    setSubscribeClasses((prev) => !prev);
+    try {
+      await sendRequest(
+        "http://localhost:5000/api/users/subscribe",
+        "POST",
+        JSON.stringify({
+          id: loadedAuthor.id,
+        }),
+        {
+          Authorization: "Bearer " + authCtx.token,
+          "Content-Type": "application/json",
+        }
+      );
+    } catch (err) {}
   };
 
   return (
@@ -204,7 +223,22 @@ const VideoDetailPage = () => {
                 <h1>{loadedAuthor.name}</h1>
                 <p>{loadedVideo.description}</p>
               </div>
-              <button className="video-detail-subscribe">SUBSCRIBE</button>
+              {loadedAuthor.id !== authCtx.userId && (
+                <button
+                  className={subscribeClasses ? 'video-detail-subscribed' : 'video-detail-subscribe'}
+                  onClick={toggleSubscribeHandler}
+                >
+                  SUBSCRIBE
+                </button>
+              )}
+              {loadedAuthor.id === authCtx.userId && (
+                <Link
+                  to={`/channel/${authCtx.userId}/videos`}
+                  className="video-detail-edit-video"
+                >
+                  <button>EDIT VIDEO</button>
+                </Link>
+              )}
             </div>
 
             {/* Comment */}
